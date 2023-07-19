@@ -21,7 +21,7 @@
 					<div id="intro">
 						<h1>These are<br />
 						Fractals</h1>
-						<p>A website with interesting thoughts, ideas, opinions and implementations in the world of 
+						<p>A website with interesting thoughts, ideas, opinions, designs, implementations in the world of 
 							Machine Learning and Artificial Intelligence. 
 						</p>
 						<ul class="actions">
@@ -31,7 +31,7 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo">Massively</a>
+						<a href="index.html" class="logo">Home</a>
 					</header>
 
 				<!-- Nav -->
@@ -51,16 +51,32 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<span class="date">April 25, 2017</span>
-									<h1>This is a<br />
-									Generic Page</h1>
-									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
-									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
-									amet nullam sed etiam veroeros.</p>
+									<span class="date">Updated July 18, 2023</span>
+									<h1>Security for<br />
+									 Generative ML / AI</h1>
+									<p>In a world of Generative AI software, it is becoming increasingly<br />
+									important to identify counterfeits. Read on for more.</p>
 								</header>
-								<div class="image main"><img src="images/pic01.jpg" alt="" /></div>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur sapien risus, commodo eget turpis at, elementum convallis enim turpis, lorem ipsum dolor sit amet nullam.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus. Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum.</p>
+								<div class="image main"><img src="images/AI generated Image - Spectral.jpg" alt="" /></div>
+								<p>Generative models, like any creative model, need a basis. We cannot create results out of thin air, and hence need an underlying source of basis, which is either a distribution (and along with it, some stochasticity) or derived from random variables. Let us explore this underlying basis, to arrive at the models’ security concerns and the corresponding solutions naturally.</p>
+								<p> The most popular generative frameworks such as Transformers, GANs, Autoencoders, etc utilize some form of basis to build and perfect their generation capabilities -
+								<ul>
+  									<li>In the Transformer framework, the hidden attention layers capture the essence of the open-ended sentences to generate the next word. The basis is the optimization of those layers with gradient descent</li>
+  									<li>GAN models rely on latent variables (random continuous variables) that are trained to represent a particular distribution. The basis is the optimization of those variables with gradient descent</li>
+  									<li>Autoencoders’ latent variables are a mix of those of GAN and Transformer models</li>
+								</ul>
+								<p>However, generative models have their own suite of inefficiencies: digital media and algorithmic creation of it -</p>
+								<ul>
+  									<li>Digital (human) media - Digital media is, mathematically speaking, an approximation of analog media. This is due to the approximation nature of data in digital media ( with data represented as bits instead of analog, infinitely-deep real-world entities. Digital art detection is analogous to detecting fakes from originals in real life - we just have to look close enough</li>
+  									<li>Algorithmic media - Algorithmic media is a multi level approximation of real media, with the absence of an analog “recording”. As latent variables try to approximate distributions, they tend to lack accuracy in representation, especially with changing environments</li>
+								</ul>
+								<p>The security concerns of algorithmic media is the ability to generate problematic, immoral, fake and controversial media.</p>
+								<p>Algorithmic media can be detected by analyzing the transformations between its states. Given that a limited number of latent variables generate this media, the information represented cannot be lossless.</p>
+								<p>As we can only analyze the product of these models, our basis identification starts from the same end result. Most models rely entirely on latent representations to guide their outputs, so we should be tracing these microscopic losses from the same.</p>
+
+								<h3>How do we convert these ideas and theories into software / models? How do we trace these microscopic losses?</h3>
+
+								<p>We can trace pixels or entities with vectors and track the aging of those vectors over time or space. In this way, we can detect microscopic losses in the output of the said models.</p>						
 							</section>
 
 					</div>
