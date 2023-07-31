@@ -58,7 +58,8 @@
 									important to identify counterfeits and generated media. <a class = "scrolly" href="#main-content" style="color:#A9A9A9" >Read on for more.</a></p>
 								</header>
 								<div class="image main"><img src="images/AI generated Image - Spectral.jpg" alt="" /></div>
-								<p id="main-content">Generative models, like any creative model, need a basis. We cannot create results out of thin air, and hence need an underlying source of basis, which is either a distribution (and along with it, some stochasticity) or derived from random variables. Let us explore this underlying basis, to arrive at the models’ security concerns and the corresponding solutions naturally.</p>
+								<p id="main-content">Generative models, like any creative model, need a basis. We cannot create results out of thin air, and hence need an underlying source of basis, 
+									which is either a distribution (and along with it, some stochasticity) or derived from random variables. Let us explore this underlying basis, to arrive at the models’ security concerns and the corresponding solutions naturally.</p>
 								<p> The most popular generative frameworks such as Transformers, GANs, Autoencoders, etc utilize some form of basis to build and perfect their generation capabilities -
 								<ul>
   									<li>In the Transformer framework, the hidden attention layers capture the essence of the open-ended sentences to generate the next word. The basis is the optimization of those layers with gradient descent</li>
@@ -67,8 +68,10 @@
 								</ul>
 								<p>However, generative models have their own suite of inefficiencies: digital media and algorithmic creation of it -</p>
 								<ul>
-  									<li>Digital (human) media - Digital media is, mathematically speaking, an approximation of analog media. This is due to the approximation nature of data in digital media ( with data represented as bits instead of analog, infinitely-deep real-world entities. Digital art detection is analogous to detecting fakes from originals in real life - we just have to look close enough</li>
-  									<li>Algorithmic media - Algorithmic media is a multi level approximation of real media, with the absence of an analog “recording”. As latent variables try to approximate distributions, they tend to lack accuracy in representation, especially with changing environments</li>
+  									<li>Digital (human) media - Digital media is, mathematically speaking, an approximation of analog media. This is due to the approximation nature of data in digital media ( with data represented as bits instead of 
+										analog, infinitely-deep real-world entities. Digital art detection is analogous to detecting fakes from originals in real life - we just have to look close enough</li>
+  									<li>Algorithmic media - Algorithmic media is a multi level approximation of real media, with the absence of an analog “recording”. As latent variables try to approximate distributions, they tend to lack 
+										accuracy in representation, especially with changing environments</li>
 								</ul>
 								<p>The security concerns of algorithmic media is the ability to generate problematic, immoral, fake and controversial media.</p>
 								<p>Algorithmic media can be detected by analyzing the transformations between its states. Given that a limited number of latent variables generate this media, the information represented cannot be lossless.</p>
@@ -76,10 +79,23 @@
 
 								<h3>How do we convert these ideas and theories into software / models? How do we trace these microscopic losses?</h3>
 
-								<p>We can trace pixels or entities with vectors and track the aging of those vectors over time or space. In this way, we can detect microscopic losses in the output of the said models. The interesting nuance with vectors is their ability to work in unison. As we trace bits and pieces of data, the model is working towards the identification of said microscopic losses. Hence, the key to
+								<p>We can trace pixels or entities with vectors and track the aging of those vectors over time or space. In this way, we can detect microscopic losses in the output of the said models. The interesting nuance with vectors 
+									is their ability to work in unison. As we trace bits and pieces of data, the model is working towards the identification of said microscopic losses. Hence, the key to
 									developing this model is the coordination between vectors. Intuitively, as we’re trying to build models with abilities commensurate with those of advanced generative AI models, it is pivotal to deploy models with a higher degree of competency.</p>	
 
-								<p> All ML models have losses ( to prevent overfitting; in case the models lack losses, the robustness can be analysed instead ) and the key to building our framework is in the detection and analysis of those microscopic nuanced losses ingrained in the model posteriors.</p>
+								<p> All ML models have losses ( to prevent overfitting; in case the models lack losses, the robustness can be analysed instead ) and the key to building our framework is in the detection and analysis of those microscopic 
+									nuanced losses ingrained in the model posteriors.</p>
+
+								<p> Analysis is matured with the progressive interaction of vector neighbors over multiple criteria.</p>
+
+								<p> The associations that are made follow the 'bead' architecture - each vector realizes its place during their progressive interaction, and after the application of selective criteria, obtains an accurate perception of the medium.</p>
+
+								<h3> Vector Design </h3>
+
+								<h4>How many vectors do we need on average?</h4>
+
+								<p>A typical 4K image has approximately 4000 * 2250 pixels, which would be 9 million vectors. To manage vectors of such scale, we need them to be lightweight and robust. The priority of each vector should be to collaborate, instead of complex 
+								processing. This design strategy would help the architecture to rapidly scale with volume.</p>
 							
 								<br>
 								<header class="major">
