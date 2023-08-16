@@ -52,7 +52,7 @@
 						<!-- Post -->
 							<section class="post">
 								<header class="major">
-									<span class="date">Updated August 7, 2023</span>
+									<span class="date">Updated August 16, 2023</span>
 									<h1>Security against<br />
 									 Generative ML / AI</h1>
 									<p>In a world of Generative AI software, it is becoming increasingly<br />
@@ -61,11 +61,12 @@
 								<div class="image main"><img src="images/AI generated Image - Spectral.jpg" alt="" /></div>
 								<p id="main-content">Generative models, like any creative model, need a basis. We cannot create results out of thin air, and hence need an underlying source of basis, 
 									which is either a distribution (and along with it, some stochasticity) or derived from random variables. Let us explore this underlying basis, to arrive at the models’ security concerns and the corresponding solutions naturally.</p>
-								<p> The most popular generative frameworks such as Transformers, GANs, Autoencoders, etc utilize some form of basis to build and perfect their generation capabilities -
+								<p> The most popular generative frameworks such as Transformers, GANs, Autoencoders, NeRF, etc utilize some form of basis to build and perfect their generation capabilities -
 								<ul>
   									<li>In the Transformer framework, the hidden attention layers capture the essence of the open-ended sentences to generate the next word. The basis is the optimization of those layers with gradient descent</li>
   									<li>GAN models rely on latent variables (random continuous variables) that are trained to represent a particular distribution. The basis is the optimization of those variables with gradient descent</li>
   									<li>Autoencoders’ latent variables are a mix of those of GAN and Transformer models</li>
+									<li>NeRF relies on a multi-layer ( non convolutional ) network. The basis is the optimization of those variables with gradient descent </li>
 								</ul>
 								<p>However, generative models have their own suite of inefficiencies: digital media and algorithmic creation of it -</p>
 								<ul>
