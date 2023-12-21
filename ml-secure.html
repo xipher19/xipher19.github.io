@@ -52,16 +52,16 @@
 									which is either a distribution (and along with it, some stochasticity) or derived from random variables. Let us explore this underlying basis, to arrive at the models’ security concerns and the corresponding solutions naturally.</p>
 								<p> The most popular generative frameworks such as Transformers, GANs, Autoencoders, NeRF, etc utilize some form of basis to build and perfect their generation capabilities -
 								<ul>
-  									<li>In the Transformer framework, the hidden attention layers capture the essence of the open-ended sentences to generate the next word. The basis is the optimization of those layers with gradient descent</li>
-  									<li>GAN models rely on latent variables (random continuous variables) that are trained to represent a particular distribution. The basis is the optimization of those variables with gradient descent</li>
-  									<li>Autoencoders’ latent variables are a mix of those of GAN and Transformer models</li>
-									<li>NeRF relies on a multi-layer ( non convolutional ) network. The basis is the optimization of those variables with gradient descent </li>
+  									<li style="line-height: 1.618;">In the Transformer framework, the hidden attention layers capture the essence of the open-ended sentences to generate the next word. The basis is the optimization of those layers with gradient descent</li>
+  									<li style="line-height: 1.618;">GAN models rely on latent variables (random continuous variables) that are trained to represent a particular distribution. The basis is the optimization of those variables with gradient descent</li>
+  									<li style="line-height: 1.618;">Autoencoders’ latent variables are a mix of those of GAN and Transformer models</li>
+									<li style="line-height: 1.618;">NeRF relies on a multi-layer ( non convolutional ) network. The basis is the optimization of those variables with gradient descent </li>
 								</ul>
 								<p>However, generative models have their own suite of inefficiencies: digital media and algorithmic creation of it -</p>
 								<ul>
-  									<li>Digital (human) media - Digital media is, mathematically speaking, an approximation of analog media. This is due to the approximation nature of data in digital media ( with data represented as bits instead of 
+  									<li style="line-height: 1.618;">Digital (human) media - Digital media is, mathematically speaking, an approximation of analog media. This is due to the approximation nature of data in digital media ( with data represented as bits instead of 
 										analog, infinitely-deep real-world entities. Digital art detection is analogous to detecting fakes from originals in real life - we just have to look close enough</li>
-  									<li>Algorithmic media - Algorithmic media is a multi level approximation of real media, with the absence of an analog “recording”. As latent variables try to approximate distributions, they tend to lack 
+  									<li style="line-height: 1.618;">Algorithmic media - Algorithmic media is a multi level approximation of real media, with the absence of an analog “recording”. As latent variables try to approximate distributions, they tend to lack 
 										accuracy in representation, especially with changing environments</li>
 								</ul>
 								<p>The security concerns of algorithmic media is the ability to generate problematic, immoral, fake and controversial media.</p>
@@ -105,7 +105,7 @@
 						<!-- Footer
 							<footer>
 								<div class="pagination">
-									<!--<a href="#" class="previous">Prev</a>-->
+									<a href="#" class="previous">Prev</a>
 									<a href="#" class="page active">1</a>
 									<a href="#" class="page">2</a>
 									<a href="#" class="page">3</a>
