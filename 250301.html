@@ -35,8 +35,6 @@
 										<h1>Retina Layout and Photoreceptors</h1>
 									</header>
 
-									<span class="image main"><img src="images/Audio CMU.png" alt="" /></span>
-
 									<p>In the past two weeks, I’ve focused on replicating the retina with appropriate modeling and mechanisms to mirror the human eye - specifically the retinal layout and individual photoreceptor “cell” functionality. Please find more on that below -</p>
 
 									<p>
@@ -70,7 +68,7 @@
 												<li>They SHOULD have faster activation and deactivation kinetics</li>
 											</ul>
 										</li>
-										<li>
+										<li>Setup the mechanisms and components for rods
 											<ul>
 												<li>Very low activation threshold (near 1 photon–equivalent) so that even dim light is detected (many false positives)</li>
 												<li>They converge many-to-one onto bipolar cells i.e., Push implementation</li>
@@ -92,6 +90,19 @@
 										<li>Neurotransmitters</li>
 										<li>Transportation</li>
 									</ol>
+
+									<hr class="major" />
+									<h2>Reading</h2>
+
+									<p>
+										I was reading through a scientific journal <a href = "https://pmc.ncbi.nlm.nih.gov/articles/PMC5043029/">paper</a> on why cones are different from rods and I was wondering why biology has many complex (and sometimes complicated) mechanisms for relatively simple functions. Here are my thoughts - 
+
+										<ol>
+											<li>To tackle cellular noise - Visual (and other sensory) signals have to be amplified in rods, for example, to counter intrinsic cellular noise. While I understand this rationale for biological systems, the amplifications serve little purpose in digital models</li>
+											<li>Chemical reaction regulation - The advantages of digital models are that they’re abstract and exact (sometimes, way too exact without flexibility). Precise representation and processing is a boon in digital systems (although the underlying hardware has its own physical complexities). However, nature relies on chemical reactions for processing and storing information which brings the need for many error correction mechanisms</li>
+											<li>Natural evolution is slow and incremental, so many complexities come from millions of upgrades to protein expressions. These complexities bring unnecessary complications as well</li>
+										</ol>
+									</p>
 
 								</section>
 
