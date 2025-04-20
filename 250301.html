@@ -32,16 +32,15 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>Audio Communication Units and Visual Ganglion Cells</h1>
+										<h1>Retina Layout and Photoreceptors</h1>
 									</header>
 
 									<span class="image main"><img src="images/Audio CMU.png" alt="" /></span>
 
-									<p>In the past two weeks, I’ve focused on wrapping up the (4 different) ganglion cell implementations, to finish the first complete version of the digital retina. Now I’m implementing the audio CMU (see architecture above), particularly the digital versions of the cochlea and auditory nerve, to supplement visual stimulus processing.</p>
+									<p>In the past two weeks, I’ve focused on replicating the retina with appropriate modeling and mechanisms to mirror the human eye - specifically the retinal layout and individual photoreceptor “cell” functionality. Please find more on that below -</p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the ganglion cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py</a>
 
 									</p>
 
@@ -52,36 +51,34 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Direction selective ganglion cells (DSGC) implementation v2 <br><br>
+									Artificial Retina algorithm v2 <br><br>
 
 									<ol>
-										<li><b>Greedily cluster SACs into groups of approximately 'sac_group_size' based on spatial proximity</b></li>
-										<li>Integrate the input signal from many amacrine cells (in a similar centrifugal manner as SAC)</li>
-										<li>Generate spikes based on the updated firing rates</li>
-									</ol>
-
-									Midget cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from r-g channel in cone bipolar cells, with spatial weighting, as they supporting high-acuity vision and red–green color opponency</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Parasol cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from rod / motion channel and cone brightness channel, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Small bistratified cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from b-y channel in cone bipolar cells, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>Setup the two-dimensional retinal layout / manifold with proportions closely mirroring the human eye
+											<ul>
+												<li>The surface is made up of closely tied hexagonal structures without any gaps in between them</li>
+												<li>At the center of this (approximately) rectangular surface, a circle of a certain radius represents the fovea</li>
+												<li>Inside the fovea, each hexagon is divided into three equal parallelograms which represent individual cones</li>
+												<li>Outside the fovea, each hexagon is divided into six equal triangles representing the rods</li>
+											</ul>
+										</li>
+										<li>Setup the mechanisms and components for cones
+											<ul>
+												<li>High activation threshold (around 100 photon–equivalents) so that low-intensity noise (many false negatives) is ignored</li>
+												<li>They have a nearly one-to-one mapping onto bipolar cells i.e., Push implementation</li>
+												<li>They show distinct spectral sensitivity (using a narrow Govardovskii nomogram). Imagine a friend who considers red and crimson the same colour and someone with better color sensitivity. This difference is primarily due to the stimulus registration in cones</li>
+												<li>They SHOULD have faster activation and deactivation kinetics</li>
+											</ul>
+										</li>
+										<li>
+											<ul>
+												<li>Very low activation threshold (near 1 photon–equivalent) so that even dim light is detected (many false positives)</li>
+												<li>They converge many-to-one onto bipolar cells i.e., Push implementation</li>
+												<li>They use a broader Govardovskii nomogram (flatter, overlapping curve) for spectral sensitivity</li>
+												<li>They integrate signals over multiple iterations (to reduce false positives from noise). They SHOULD have slower activation and deactivation kinetics. This slower response aids in integrating photon signals over time, boosting sensitivity but sacrificing temporal resolution. In the biological retina, this is done to ensure that the single photon from the scenery picked up by Rh* is not noise / a stray from the environment. HOWEVER, as modern digital sensor already incorporate this concept for low light vision, we don't need to implement it YET</li>
+											</ul>
+										</li>
+										<li>Collect the photoreceptor cell objects and store them in memory</li>
 									</ol>
 
 									<hr class="major" />
@@ -89,24 +86,18 @@
 									<h3>Push implementation and transportation</h3>
 
 									<ol>
-										<li>Implementing the audio CMU components - inner ear and auditory nerve</li>
-										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
-										<li>Overlaying audio clips onto the cochlea</li>
-									</ol>
-
-									<h3>Building the Environmental Response System (ERS)</h3>
-
-									<ol>
-										<li>Building the visual cortex</li>
-										<li>Building the auditory cortex</li>
-										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
+										<li>Overlaying frames from a video onto the retina</li>
+										<li>Horizontal cell implementation</li>
+										<li>Push cell implementation</li>
+										<li>Neurotransmitters</li>
+										<li>Transportation</li>
 									</ol>
 
 								</section>
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Apr 13, 2025</span>
+									<span class="date">Created Mar 01, 2025</span>
 								</footer>
 								<br>
 
