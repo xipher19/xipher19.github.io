@@ -32,16 +32,17 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>Audio Communication Units and Visual Ganglion Cells</h1>
+										<h1>Photoreceptor Cells, Horizontal Cells and Bipolar Cells</h1>
 									</header>
 
 									<span class="image main"><img src="images/Audio CMU.png" alt="" /></span>
 
-									<p>In the past two weeks, I’ve focused on wrapping up the (4 different) ganglion cell implementations, to finish the first complete version of the digital retina. Now I’m implementing the audio CMU (see architecture above), particularly the digital versions of the cochlea and auditory nerve, to supplement visual stimulus processing.</p>
+									<p>In the past two weeks, I’ve focused on enhancing retinal modeling with mechanisms complimentary to the photoreceptor “cell” functionality. These mechanisms help in refining stimulus, recognizing motion & contrast, and trigger neurotransmitters even before the stimulus reaches the brain. Please find more on that below -</p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the ganglion cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py</a>
+										Building the photoreceptors (including opponent processing) - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/vision.py</a>
+										Building the horizontal and bipolar cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/vision.py</a>
 
 									</p>
 
@@ -52,36 +53,44 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Direction selective ganglion cells (DSGC) implementation v2 <br><br>
+									Photoreceptor implementation v3 (includes opponent processing) <br><br>
 
 									<ol>
-										<li><b>Greedily cluster SACs into groups of approximately 'sac_group_size' based on spatial proximity</b></li>
-										<li>Integrate the input signal from many amacrine cells (in a similar centrifugal manner as SAC)</li>
-										<li>Generate spikes based on the updated firing rates</li>
+										<li>Setup the two-dimensional retinal layout / manifold with proportions closely mirroring the human eye</li>
+										<li>Setup the mechanisms and components for cones
+											<ul>
+												<li>High activation threshold (around 100 photon–equivalents) so that low-intensity noise (many false negatives) is ignored</li>
+												<li>They have a nearly one-to-one mapping onto bipolar cells i.e., Push implementation</li>
+												<li>They show distinct spectral sensitivity (using a narrow Govardovskii nomogram). Imagine a friend who considers red and crimson the same colour and someone with better color sensitivity. This difference is primarily due to the stimulus registration in cones</li>
+												<li>They SHOULD have faster activation and deactivation kinetics</li>
+												<li>Opponent channels are produced to emphasize contrast</li>
+											</ul>
+										</li>
+										<li>Setup the mechanisms for rods</li>
+										<li>Collect the photoreceptor cell objects and store them in memory</li>
 									</ol>
 
-									Midget cells implementation v1 <br><br>
+									<a href="https://en.wikipedia.org/wiki/Retina_horizontal_cell">Horizontal cell</a> implementation v1<br><br>
 
 									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from r-g channel in cone bipolar cells, with spatial weighting, as they supporting high-acuity vision and red–green color opponency</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>For each photoreceptor, create a horizontal cell</li>
+										<li>Link the horizontal cells laterally
+											<ul>
+												<li>The influence radius is controlled by neurotransmitters</li>
+											</ul>
+										</li>
+										<li>Inhibit center-surround signal
+											<ul>
+												<li>Calculate the average surround signal and subtract it from the center stimulus</li>
+											</ul>
+										</li>
 									</ol>
 
-									Parasol cells implementation v1 <br><br>
+									<a href="https://en.wikipedia.org/wiki/Retina_bipolar_cell">Bipolar cell</a> implementation v1<br><br>
 
 									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from rod / motion channel and cone brightness channel, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Small bistratified cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from b-y channel in cone bipolar cells, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>ON bipolar cells amplify stimulus if it’s above a certain threshold</li>
+										<li>OFF bipolar cells inhibit stimulus if it’s under a certain threshold</li>
 									</ol>
 
 									<hr class="major" />
@@ -89,24 +98,31 @@
 									<h3>Push implementation and transportation</h3>
 
 									<ol>
-										<li>Implementing the audio CMU components - inner ear and auditory nerve</li>
-										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
-										<li>Overlaying audio clips onto the cochlea</li>
+										<li>Push cell implementation - Enhance horizontal and bipolar cells</li>
+										<li>Push cell implementation - Amacrine cell implementation </li>
+										<li>Transportation - Ganglion cell implementation</li>
+										<li>Neurotransmitters - Fed by bipolar and amacrine cells, to act on contrasting and/or temporal stimulus. Additional neurotransmitters can be added later after ERU development</li>
+										<li>Overlaying frames from a video onto the retina</li>
 									</ol>
 
-									<h3>Building the Environmental Response System (ERS)</h3>
+									<hr class="major" />
+									<h2>Why do we need these mechanisms? Contrasting (R, G, B) values with the stimulus processed by the retina</h2>
 
-									<ol>
-										<li>Building the visual cortex</li>
-										<li>Building the auditory cortex</li>
-										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
-									</ol>
+									<p>
+										<ol>
+											<li>Consistency with biology - When the arbitrarily sized (R,G,B) values are converted to photoisomerizations per sec, the latter enables the construction of analog mechanisms that are consistent with the human retina</li>
+											<li>Simultaneous processing of motion (rods + amacrine cells) and colour (cones + horizontal / bipolar cells) dynamics</li>
+											<li>Temporal and spectral sensitivity dynamics (via Govardovskii diagram) are better captured in the retina</li>
+											<li><a href ="https://en.wikipedia.org/wiki/Opponent_process">Opponent processing</a> (red–green and blue–yellow) further assists in the detection of sharp contrasts (edges and curves). These contrasts are more valuable to the human brain than consistent stimulus</li>
+											<li>Unlike (R,G,B) values, the non linear dynamical nature of the retina (influenced by neurotransmitters) helps the brain in adapting to a variety of situations. For example, if the body is under threat, pupils dilate and horizontal cells are influenced by a larger radius of neighboring cells. This enhances the visual fidelity and sharpness that the brain desires, to take appropriate actions</li>
+										</ol>
+									</p>
 
 								</section>
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Apr 13, 2025</span>
+									<span class="date">Created Mar 16, 2025</span>
 								</footer>
 								<br>
 
