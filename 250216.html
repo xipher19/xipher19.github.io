@@ -32,16 +32,13 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>Audio Communication Units and Visual Ganglion Cells</h1>
+										<h1>Visual Communication Unit / Retina and Related Reading</h1>
 									</header>
 
-									<span class="image main"><img src="images/Audio CMU.png" alt="" /></span>
-
-									<p>In the past two weeks, I’ve focused on wrapping up the (4 different) ganglion cell implementations, to finish the first complete version of the digital retina. Now I’m implementing the audio CMU (see architecture above), particularly the digital versions of the cochlea and auditory nerve, to supplement visual stimulus processing.</p>
+									<p>In the past two weeks, I’ve focused on building a digital twin of the human retina (section 1.a. from the above). In particular, I’m replicating the cone and rod distribution in the human eye and spent a majority of that time in understanding prior attempts of rebuilding the retina. My thoughts on the reading are below -</p>
 
 									<p>
-										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the ganglion cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py</a>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a>
 
 									</p>
 
@@ -52,36 +49,11 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Direction selective ganglion cells (DSGC) implementation v2 <br><br>
-
 									<ol>
-										<li><b>Greedily cluster SACs into groups of approximately 'sac_group_size' based on spatial proximity</b></li>
-										<li>Integrate the input signal from many amacrine cells (in a similar centrifugal manner as SAC)</li>
-										<li>Generate spikes based on the updated firing rates</li>
-									</ol>
-
-									Midget cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from r-g channel in cone bipolar cells, with spatial weighting, as they supporting high-acuity vision and red–green color opponency</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Parasol cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from rod / motion channel and cone brightness channel, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Small bistratified cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from b-y channel in cone bipolar cells, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>Initialize the parameters of the retina</li>
+										<li>Initialize the rods and cones submodules</li>
+										<li>Build concentric rings of rods and cones, while maintaining consistency with its biological counterpart</li>
+										<li>Scan through the retinal surface and stitch photoreceptors together if gaps exist</li>
 									</ol>
 
 									<hr class="major" />
@@ -89,24 +61,35 @@
 									<h3>Push implementation and transportation</h3>
 
 									<ol>
-										<li>Implementing the audio CMU components - inner ear and auditory nerve</li>
-										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
-										<li>Overlaying audio clips onto the cochlea</li>
+										<li>Refining the model / algorithm of the artificial retina</li>
+										<li>Overlaying stimulus onto the retina</li>
 									</ol>
 
-									<h3>Building the Environmental Response System (ERS)</h3>
+									<hr class="major" />
+									<h2>Reading</h2>
 
-									<ol>
-										<li>Building the visual cortex</li>
-										<li>Building the auditory cortex</li>
-										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
-									</ol>
+									<p>
+
+									<a href="https://en.wikipedia.org/wiki/Soar_(cognitive_architecture)#Symbolic_input_and_output">https://en.wikipedia.org/wiki/Soar_(cognitive_architecture)#Symbolic_input_and_output</a> - This section piqued my interest as communication units are essentially I/O structures for Beads. However, the underlying principle for I/O and spatial visualization is more symbolic in Soar than in Beads. <br><br>
+
+									<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5043029/#:~:text=One%20hundred%20and%20fifty%20years,bright%20light%20and%20colour%20detection">https://pmc.ncbi.nlm.nih.gov/articles/PMC5043029/#:~:text=One%20hundred%20and%20fifty%20years,bright%20light%20and%20colour%20detection</a> - Inspired by the evolutionary distribution of cones and rods in the human eye (for different light settings in the day and night), I want to incorporate their advantages into the Beads’ stimuli. So, the artificial senses will mirror the natural ones as much as possible. <br><br>
+
+									<a href="https://en.wikipedia.org/wiki/Carver_Mead#Neural_models_of_computing">https://en.wikipedia.org/wiki/Carver_Mead#Neural_models_of_computing</a> - Some of Dr. Mead’s ideas (like the two dimensional resistive network) are interesting approximations of the human retina. They inspire me to think in similar directions for the retinal modeling in Push implementation. <br><br>
+
+									<a href="https://en.wikipedia.org/wiki/Event_camera#Algorithms">https://en.wikipedia.org/wiki/Event_camera#Algorithms</a> - They highlight the advantages of asynchronous stimulus capture when compared to conventional cameras. This would be useful later on, to improve the implementation of vision CMUs. <br><br>
+
+									<a href="https://en.wikipedia.org/wiki/Neuromorphic_computing">https://en.wikipedia.org/wiki/Neuromorphic_computing</a> - A broad area of research that primarily brings brain concepts back to the physical computer system. However, software-based implementations like spiking neural networks attempt to model the electrical signaling in the brain. These alternate models to Beads would be good benchmarks for performance comparison. <br><br>
+
+									<a href="https://www.google.com/books/edition/Art_and_Visual_Perception_Second_Edition/y1DhEAAAQBAJ?hl=en&gbpv=1&pg=PA2&printsec=frontcover">https://www.google.com/books/edition/Art_and_Visual_Perception_Second_Edition/y1DhEAAAQBAJ?hl=en&gbpv=1&pg=PA2&printsec=frontcover</a> - A great read on what it “means” to perceive. It definitely helped me in comparing the meaning of perception across multiple Beads modules. <br><br>
+
+								</p>
+
 
 								</section>
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Apr 13, 2025</span>
+									<span class="date">Created Feb 16, 2025</span>
 								</footer>
 								<br>
 
