@@ -37,12 +37,13 @@
 
 									<span class="image main"><img src="images/Audio CMU.png" alt="" /></span>
 
-									<p>In the past two weeks, I’ve focused on wrapping up the (4 different) ganglion cell implementations, to finish the first complete version of the digital retina. Now I’m implementing the audio CMU (see architecture above), particularly the digital versions of the cochlea and auditory nerve, to supplement visual stimulus processing.</p>
+									<p>In the past two weeks, I’ve focused on refining horizontal and bipolar cell implementations with better biological consistency. For example, horizontal cells are limited to cones only and are affected by neurotransmitters like dopamine. Additionally, fine tuned versions of the different types of amacrine cells along with direction selective ganglion cells (DSGC) are also implemented. With the latest progress, the digital retina is nearly complete (pending a few multi-channel ganglion cell implementations). By creating a biologically similar visual processing system, stimulus is richer and with much needed context, slowly transforming into information that the brain can eventually use. Please find more on that below -</p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the ganglion cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py</a>
-
+										Enhancing the horizontal and bipolar cells - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/vision.py</a> <br>
+										Building the starburst amacrine cells (SAC) - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/vision.py</a> <br>
+										Building the direction selective ganglion cells (DSGC) - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/vision.py</a> <br>
 									</p>
 
 									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
@@ -52,36 +53,55 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Direction selective ganglion cells (DSGC) implementation v2 <br><br>
+									Horizontal cell implementation v2 (reference: <a href = "https://pubmed.ncbi.nlm.nih.gov/8924420/">https://pubmed.ncbi.nlm.nih.gov/8924420/)</a><br><br>
 
 									<ol>
-										<li><b>Greedily cluster SACs into groups of approximately 'sac_group_size' based on spatial proximity</b></li>
+										<li>For each <b>cone</b>photoreceptor, create a horizontal cell</li>
+										<li>Link the horizontal cells laterally
+											<ul>
+												<li>The influence radius is controlled by neurotransmitters</li>
+											</ul>
+										</li>
+										<li>Inhibit center-surround signal
+											<ul>
+												<li>Calculate the center stimulus with exponential decay weighting </li>
+												<li>Calculate the surround inhibition (with exponential decay weighting) and subtract it from the center stimulus</li>
+											</ul>
+										</li>
+									</ol>
+
+									Bipolar cell implementation v2<br><br>
+
+									<ol>
+										<li>ON bipolar cells amplify stimulus <b>via a leaky integrator </b> if it’s above a certain threshold</li>
+										<li>OFF bipolar cells amplify stimulus <b>via a leaky integrator </b> if it’s above a certain threshold</li>
+									</ol>
+
+									Amacrine cell implementation v1 <br><br>
+
+									<ol>
+										<li>AII amacrine cells in the rod pathway
+											<ul>
+												<li>Update the AII cell's membrane potential based on rod bipolar input</li>
+												<li>Generate ON electrical output (linear, normalized between 0 and g_gap_max)</li>
+												<li>Generate OFF inhibitory output (glycinergic release, using a steep sigmoid)</li>
+											</ul>
+										</li>
+										<li>Starburst amacrine cells in the general pathway
+											<ul>
+												<li>Cluster bipolar cells in the ratio 10-to-1 </li>
+												<li>Calculate weighted directional vector between the centroid and each bipolar cell</li>
+												<li>Project the vector on the four cardinal directions</li>
+												<li>Sum “centrifugal” contributions to get an aggregate directional vector</li>
+											</ul>
+										</li>
+									</ol>
+
+									Direction selective ganglion cells (DSGC) implementation v1 (reference: <a href = "https://webvision.med.utah.edu/book/part-iii-retinal-circuits/the-anatomy-and-physiology-of-direction-selective-retinal-ganglion-cells">blog</a>) <br><br>
+
+									<ol>
 										<li>Integrate the input signal from many amacrine cells (in a similar centrifugal manner as SAC)</li>
 										<li>Generate spikes based on the updated firing rates</li>
-									</ol>
-
-									Midget cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from r-g channel in cone bipolar cells, with spatial weighting, as they supporting high-acuity vision and red–green color opponency</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Parasol cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from rod / motion channel and cone brightness channel, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
-									</ol>
-
-									Small bistratified cells implementation v1 <br><br>
-
-									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from b-y channel in cone bipolar cells, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
 									</ol>
 
 									<hr class="major" />
@@ -89,24 +109,59 @@
 									<h3>Push implementation and transportation</h3>
 
 									<ol>
-										<li>Implementing the audio CMU components - inner ear and auditory nerve</li>
-										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
-										<li>Overlaying audio clips onto the cochlea</li>
+										<li>Transportation - Full ganglion cell implementation</li>
+										<li>Overlaying frames from a video onto the retina</li>
+										<li>Neurotransmitters - Fed by bipolar and amacrine cells, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
+										<li>Building the cochlea</li>
 									</ol>
 
-									<h3>Building the Environmental Response System (ERS)</h3>
+									<hr class="major" />
+									<h2>Design Retrospective - Reconciling the vision-CMU / retina implementation with Beads design</h2>
 
-									<ol>
-										<li>Building the visual cortex</li>
-										<li>Building the auditory cortex</li>
-										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
-									</ol>
+									<p>
+										After reviewing my past notes, here are the design elements that I aimed for and how well the implementation fits to that design -
+
+										<table>
+										  <tr>
+										    <th>Design Requirement</th>
+										    <th>Implementation Specifics</th>
+										  </tr>
+										  <tr>
+										    <td>Motion blur capture</td>
+										    <td>Complete starburst amacrine cell (SAC) inhibition; Poor temporal integration via rods</td>
+										  </tr>
+										  <tr>
+										    <td>Directional movement capture</td>
+										    <td>Partial SAC inhibition; Poor temporal integration via rods</td>
+										  </tr>
+										  <tr>
+										    <td>Stillness capture</td>
+										    <td>Complete SAC inhibition; Good temporal integration via rods</td>
+										  </tr>
+										  <tr>
+										    <td>Colour, sharpness and picture quality</td>
+										    <td>Cones with opponent processing; Bipolar cells</td>
+										  </tr>
+										  <tr>
+										    <td>Push implementation - “pushing” cells at different intensities to improve perception</td>
+										    <td>Horizontal cells; Bipolar cells</td>
+										  </tr>
+										  <tr>
+										    <td>Multiple channels for population coding at the visual cortex levels (V1, V2 and so on)</td>
+										    <td>Different types of ganglion cells</td>
+										  </tr>
+										  <tr>
+										    <td>Neurotransmitter modulation</td>
+										    <td>Dopamine levels affect horizontal cells</td>
+										  </tr>
+										</table>
+									</p>
 
 								</section>
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Apr 13, 2025</span>
+									<span class="date">Created Mar 30, 2025</span>
 								</footer>
 								<br>
 
