@@ -39,9 +39,9 @@
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the outer ear components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py</a>
-										Building the OHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py</a>
-										Building the IHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py</a>
+										Building the outer ear components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py</a> <br>
+										Building the OHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py</a> <br>
+										Building the IHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py</a> <br>
 										Building the auditory nerve components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py</a>
 
 									</p>
@@ -53,36 +53,60 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Direction selective ganglion cells (DSGC) implementation v2 <br><br>
+									Pinna implementation v2 <br><br>
 
 									<ol>
-										<li><b>Greedily cluster SACs into groups of approximately 'sac_group_size' based on spatial proximity</b></li>
-										<li>Integrate the input signal from many amacrine cells (in a similar centrifugal manner as SAC)</li>
-										<li>Generate spikes based on the updated firing rates</li>
+										<li>
+											Given (biologically accurate) notch frequencies / notch depths, employ 2nd order <a href = "https://en.wikipedia.org/wiki/Butterworth_filter">Butterworth</a> <b>bandstop</b> signal design for smooth filtering 
+											<ol>
+												<li>Transform coefficients to include compression</li>	
+											</ol>
+										</li>
+										<li>
+											Given (biologically accurate) peak frequencies / peak gains, employ 2nd order Butterworth <b>bandpass</b> signal design for smooth filtering  
+											<ol>
+												<li>Transform coefficients to include gains</li>	
+											</ol>
+										</li>
+										<li>Sequentially apply all notches and peaks to the incoming signal</li>
 									</ol>
 
-									Midget cells implementation v1 <br><br>
+									Ear canal implementation v2 <br><br>
 
 									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from r-g channel in cone bipolar cells, with spatial weighting, as they supporting high-acuity vision and red–green color opponency</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>Given (biologically accurate) measurements of the human ear canal, generate its appropriate bandwidth and frequency</li>
+										<li>
+											Employ 2nd order Butterworth <b>bandpass</b> signal design for smooth filtering
+											<ol>
+												<li>Transform coefficients to include gains</li>
+											</ol>
+										</li>
+										<li>Boost frequencies around canal frequency by approx. gain decibels</li>
 									</ol>
 
-									Parasol cells implementation v1 <br><br>
+									OHC amplifier implementation v1 <br><br>
 
 									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from rod / motion channel and cone brightness channel, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>For each channel, sharpen using a <a href="https://brian2hears.readthedocs.io/en/stable/auto_examples/drnl.html">Dual‑Resonance Nonlinear (DRNL) model</a> having linear and nonlinear pathways</li>
 									</ol>
 
-									Small bistratified cells implementation v1 <br><br>
+									IHC implementation v1 <br><br>
 
 									<ol>
-										<li>Greedily cluster bipolar cells by spatial proximity</li>
-										<li>Integrate input from b-y channel in cone bipolar cells, with spatial weighting</li>
-										<li>Generate spikes based on the stimulus</li>
+										<li>Half wave rectification of the input signal</li>
+										<li>Lowpass filtering of signal</li>
+									</ol>
+
+									Ribbon synapse implementation v1 <br><br>
+
+									<ol>
+										<li>Power law adaptation of the IHC output</li>
+									</ol>
+
+									Spike train implementation v1 <br><br>
+
+									<ol>
+										<li>Convert the adapted signal from ribbon synapse into a spike train using leaky integrators</li>
 									</ol>
 
 									<hr class="major" />
@@ -90,9 +114,15 @@
 									<h3>Push implementation and transportation</h3>
 
 									<ol>
-										<li>Implementing the audio CMU components - inner ear and auditory nerve</li>
+										<li>Implementing the inner ear CMU components</li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
 										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
-										<li>Overlaying audio clips onto the cochlea</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
 									</ol>
 
 									<h3>Building the Environmental Response System (ERS)</h3>
@@ -100,7 +130,59 @@
 									<ol>
 										<li>Building the visual cortex</li>
 										<li>Building the auditory cortex</li>
-										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. Neurotransmitters can be added later during ERU development</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. <i>Neurotransmitters can be added later during ERU development</i></li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Audio CMU Components</h2>
+
+									<p>
+										<table>
+										  <tr>
+										    <th>Component</th>
+										    <th>Functionality</th>
+										  </tr>
+										  <tr>
+										    <td>Pinna</td>
+										    <td>Given its asymmetric structure, the pinna (external ear cartilage) helps with spatial hearing by applying different decibel boosts (through natural resonance) to sounds coming from different directions</td>
+										  </tr>
+										  <tr>
+										    <td>Ear canal</td>
+										    <td>The ear canal’s natural frequency helps boost mid-range frequencies and consequently aids in consonant / speech recognition</td>
+										  </tr>
+										  <tr>
+										    <td>Outer hair cells</td>
+										    <td>They sharpen / tune frequencies so that subtle pitch differences (in speech and music, for example) are noticeable. Additionally, they boost low frequency sounds while compressing high frequency ones, to improve cochlear sensitivity</td>
+										  </tr>
+										  <tr>
+										    <td>Inner hair cells</td>
+										    <td>The core transducer that converts sound waves (which have passed through different media) to electric signals</td>
+										  </tr>
+										  <tr>
+										    <td>IHC neural transducer</td>
+										    <td>Ion channels that react to sound waves and stimulate spike trains</td>
+										  </tr>
+										  <tr>
+										    <td>Ribbon synapse</td>
+										    <td>Aids in rapid release of neurotransmitters / stimulus to the auditory nerve</td>
+										  </tr>
+										  <tr>
+										    <td>Efferent modulator</td>
+										    <td>Feedback mechanism from the brain (through neurotransmitters) to modulate the OHC gain (by adjusting elasticity of OHC cells on the basilar membrane)</td>
+										  </tr>
+										  <tr>
+										    <td>Spiral ganglion neurons</td>
+										    <td>Analogous to the retina’s ganglion cells; a bundle of them form the auditory nerve that ends up in the auditory cortex</td>
+										  </tr>
+										</table>
+									</p>
+
+									<hr class="major" />
+									<h2>Audio CMU Design Updates</h2>
+
+									<ol>
+										<li>Outer ear - After a review of related biology research, I realized that the outer ear has functionalities that aid in sound localization and resonant amplification (of consonants). These should help the brain with much needed context for richer memory as well as other higher cognitive functions. In line with the goal of this project, I aim to implement these functionalities as accurately as possible</li>
+										<li>Middle ear - A digital microphone already transforms sound energy into electrical signals, so middle ear functionalities aren’t the most critical to implement. Moreover, the middle ear’s contribution to balance and acoustic protection falls outside the scope of the project</li>
 									</ol>
 
 								</section>
