@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Components of the Audio CMU</h1>
+									</header>
+
+									<p>After additional reading in the past two weeks, I’ve further refined the design of the audio CMU to include biologically accurate functionalities of the pinna and ear canal. I was also focused on the coarse implementations of all audio CMU subcomponents.</p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the outer ear components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/receive/audio.py</a> <br>
+										Building the OHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/combine/audio.py</a> <br>
+										Building the IHC components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py</a> <br>
+										Building the auditory nerve components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py</a>
+
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Push implementation and transportation</h3>
+
+									Pinna implementation v2 <br><br>
+
+									<ol>
+										<li>
+											Given (biologically accurate) notch frequencies / notch depths, employ 2nd order <a href = "https://en.wikipedia.org/wiki/Butterworth_filter">Butterworth</a> <b>bandstop</b> signal design for smooth filtering 
+											<ul>
+												<li>Transform coefficients to include compression</li>	
+											</ul>
+										</li>
+										<li>
+											Given (biologically accurate) peak frequencies / peak gains, employ 2nd order Butterworth <b>bandpass</b> signal design for smooth filtering  
+											<ul>
+												<li>Transform coefficients to include gains</li>	
+											</ul>
+										</li>
+										<li>Sequentially apply all notches and peaks to the incoming signal</li>
+									</ol>
+
+									Ear canal implementation v2 <br><br>
+
+									<ol>
+										<li>Given (biologically accurate) measurements of the human ear canal, generate its appropriate bandwidth and frequency</li>
+										<li>
+											Employ 2nd order Butterworth <b>bandpass</b> signal design for smooth filtering
+											<ul>
+												<li>Transform coefficients to include gains</li>
+											</ul>
+										</li>
+										<li>Boost frequencies around canal frequency by approx. gain decibels</li>
+									</ol>
+
+									OHC amplifier implementation v1 <br><br>
+
+									<ol>
+										<li>For each channel, sharpen using a <a href="https://brian2hears.readthedocs.io/en/stable/auto_examples/drnl.html">Dual‑Resonance Nonlinear (DRNL) model</a> having linear and nonlinear pathways</li>
+									</ol>
+
+									IHC implementation v1 <br><br>
+
+									<ol>
+										<li>Half wave rectification of the input signal</li>
+										<li>Lowpass filtering of signal</li>
+									</ol>
+
+									Ribbon synapse implementation v1 <br><br>
+
+									<ol>
+										<li>Power law adaptation of the IHC output</li>
+									</ol>
+
+									Spike train implementation v1 <br><br>
+
+									<ol>
+										<li>Convert the adapted signal from ribbon synapse into a spike train using leaky integrators</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Push implementation and transportation</h3>
+
+									<ol>
+										<li>Implementing the inner ear CMU components</li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the visual cortex</li>
+										<li>Building the auditory cortex</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. <i>Neurotransmitters can be added later during ERU development</i></li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Audio CMU Components</h2>
+
+									<p>
+										<table>
+										  <tr>
+										    <th>Component</th>
+										    <th>Functionality</th>
+										  </tr>
+										  <tr>
+										    <td>Pinna</td>
+										    <td>Given its asymmetric structure, the pinna (external ear cartilage) helps with spatial hearing by applying different decibel boosts (through natural resonance) to sounds coming from different directions</td>
+										  </tr>
+										  <tr>
+										    <td>Ear canal</td>
+										    <td>The ear canal’s natural frequency helps boost mid-range frequencies and consequently aids in consonant / speech recognition</td>
+										  </tr>
+										  <tr>
+										    <td>Outer hair cells</td>
+										    <td>They sharpen / tune frequencies so that subtle pitch differences (in speech and music, for example) are noticeable. Additionally, they boost low frequency sounds while compressing high frequency ones, to improve cochlear sensitivity</td>
+										  </tr>
+										  <tr>
+										    <td>Inner hair cells</td>
+										    <td>The core transducer that converts sound waves (which have passed through different media) to electric signals</td>
+										  </tr>
+										  <tr>
+										    <td>IHC neural transducer</td>
+										    <td>Ion channels that react to sound waves and stimulate spike trains</td>
+										  </tr>
+										  <tr>
+										    <td>Ribbon synapse</td>
+										    <td>Aids in rapid release of neurotransmitters / stimulus to the auditory nerve</td>
+										  </tr>
+										  <tr>
+										    <td>Efferent modulator</td>
+										    <td>Feedback mechanism from the brain (through neurotransmitters) to modulate the OHC gain (by adjusting elasticity of OHC cells on the basilar membrane)</td>
+										  </tr>
+										  <tr>
+										    <td>Spiral ganglion neurons</td>
+										    <td>Analogous to the retina’s ganglion cells; a bundle of them form the auditory nerve that ends up in the auditory cortex</td>
+										  </tr>
+										</table>
+									</p>
+
+									<hr class="major" />
+									<h2>Audio CMU Design Updates</h2>
+
+									<ol>
+										<li>Outer ear - After a review of related biology research, I realized that the outer ear has functionalities that aid in sound localization and resonant amplification (of consonants). These should help the brain with much needed context for richer memory as well as other higher cognitive functions. In line with the goal of this project, I aim to implement these functionalities as accurately as possible</li>
+										<li>Middle ear - A digital microphone already transforms sound energy into electrical signals, so middle ear functionalities aren’t the most critical to implement. Moreover, the middle ear’s contribution to balance and acoustic protection falls outside the scope of the project</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Apr 27, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
