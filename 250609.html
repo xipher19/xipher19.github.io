@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>IHC and Ribbon Synapse</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on implementing the biological processes in the <a href = "https://en.wikipedia.org/wiki/Hair_cell#Inner_hair_cells_–_from_sound_to_nerve_signal">inner hair cells</a> and the <a href = "https://en.wikipedia.org/wiki/Ribbon_synapse">ribbon synapse</a>.</p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the IHC & Ribbon Synapse components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Push implementation and transportation</h3>
+
+									Inner Hair Cell implementation v1 <br><br>
+
+									<ol>
+										<li>Define biologically accurate constants for the MET channels</li>
+										<li>Based on the displacement of the inner hair cells (modulated by OHCs), define the MET current</li>
+										<li>Smoothen this current over a time span of ~1 ms</li>
+										<li>Given the exponential nature of Ca2+ activation beyond the threshold, define appropriate mechanisms on update</li>
+									</ol>
+
+									Ribbon Synapse implementation v1 <br><br>
+
+									<ol>
+										<li>Define the three pools of <a href = "https://pubs.aip.org/asa/jasa/article-abstract/87/4/1813/930809/Implementation-details-of-a-computation-model-of">Meddis</a> synapse and their rates</li>
+										<li>Implement a binomial stochastic release to ensure low neurotransmitter transfer even on zero stimulus</li>
+										<li>Implement pool flows</li>
+										<li>Return the number of vesicles released</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Push implementation and transportation</h3>
+
+									<ol>
+										<li>Implementing the auditory nerve components</li>
+									</ol>
+
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the visual cortex</li>
+										<li>Building the auditory cortex</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. <i>Neurotransmitters (and their lifecycles) can be added later during ERU development</i></li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>IHC Transduction and Ribbon Synapse</h2>
+
+									<p>
+										As discussed previously, the basilar membrane and its supplementary mechanisms constitute the primary transducers in a mammalian ear. Along with tonotopy, those supplementary mechanisms are
+										<ol>
+											<li>Inner hair cells (IHC) to <a href = "https://pmc.ncbi.nlm.nih.gov/articles/PMC4101631/">mechanoelectrical transduction (MET)</a> - When the basilar membrane vibrates, inner hair cells’ stereocilia “bend” underneath them. The intensity of the bend is proportional to the loudness of the wave at that instant. Moreover, when these cells bend, tiny gates called MET channels are opened which releases a current to the IHC. The organization of these channels ensures that they scale exponentially up until a saturation point, similar to a sigmoid curve in mathematics. An interesting inference from this mechanism is that in young people, this scaling is exponential while in older people, it is linear. That’s why the latter group has a hard time hearing!</li>
+											<li>Receptor potential smoothing and voltage gated Ca2+ ion signals - A secondary function of the basilar membrane is to smooth vibrations over a small time period of ~1 ms, so that IHCs aren’t overwhelmed. And as current is generated via MET channels, there are voltage-gated Calcium ion channels deep in the IHCs which signal the <a href = "https://en.wikipedia.org/wiki/Synaptic_vesicle">neurotransmitter vesicles</a> to be released from ribbons</li>
+											<li>
+												Ribbon synapse - It essentially consists of three pools that interact with each other during polarization and depolarization
+												<ul>
+													<li>Ready pool - This pool contains vesicles which are ready to be transmitted as Ca2+ ions polarize in the IHC</li>
+													<li>Cleft harbor - Once a vesicle <a href = "https://en.wikipedia.org/wiki/Vesicle_fusion">fuses</a>, the neurotransmitters in them are released to form the synapses sent to the brain. This is the pool at the other end of the IHC</li>
+													<li>Recycling pool - This pool contains the empty vesicles pulled back and are ready to be refilled, so that they can return to the ready pool as the process repeats endlessly</li>
+												</ul>
+											</li>
+										</ol>
+									</p>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created May 24, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
