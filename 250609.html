@@ -32,14 +32,14 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>IHC and Ribbon Synapse</h1>
+										<h1>Auditory Nerves</h1>
 									</header>
 
-									<p>In the past two weeks, I’ve focused on implementing the biological processes in the <a href = "https://en.wikipedia.org/wiki/Hair_cell#Inner_hair_cells_–_from_sound_to_nerve_signal">inner hair cells</a> and the <a href = "https://en.wikipedia.org/wiki/Ribbon_synapse">ribbon synapse</a>.</p>
+									<p>In the past two weeks, I’ve focused on building the remaining audio CMU components after the IHC. This includes the <a href="https://en.m.wikipedia.org/wiki/Spiral_ganglion">spiral ganglion cell</a> and neurotransmitter release in the auditory nerve.</p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the IHC & Ribbon Synapse components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/sequencing/transforms/audio.py</a>
+										Building the Auditory Nerve components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py</a>
 									</p>
 
 									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
@@ -49,32 +49,25 @@
 									<h2>Algorithms / Development</h2>
 									<h3>Push implementation and transportation</h3>
 
-									Inner Hair Cell implementation v1 <br><br>
+									Auditory Nerve Fiber implementation v1 <br><br>
 
 									<ol>
-										<li>Define biologically accurate constants for the MET channels</li>
-										<li>Based on the displacement of the inner hair cells (modulated by OHCs), define the MET current</li>
-										<li>Smoothen this current over a time span of ~1 ms</li>
-										<li>Given the exponential nature of Ca2+ activation beyond the threshold, define appropriate mechanisms on update</li>
-									</ol>
-
-									Ribbon Synapse implementation v1 <br><br>
-
-									<ol>
-										<li>Define the three pools of <a href = "https://pubs.aip.org/asa/jasa/article-abstract/87/4/1813/930809/Implementation-details-of-a-computation-model-of">Meddis</a> synapse and their rates</li>
-										<li>Implement a binomial stochastic release to ensure low neurotransmitter transfer even on zero stimulus</li>
-										<li>Implement pool flows</li>
-										<li>Return the number of vesicles released</li>
+										<li>Define biologically accurate constants for the auditory nerve fibers</li>
+										<li>If the AN fiber is in the refractory (cool down) period, do nothing</li>
+										<li>
+											Else,
+											<ul>
+												<li>The change in potential dV is defined according to the leaky integrate model</li>
+												<li>Add a stochastic component to dV (optional)</li>
+												<li>Add dV to the instantaneous potential of the membrane</li>
+												<li>If the spike condition is met, generate a spike!</li>
+											</ul>
+										</li>
+										<li>Generate spike trains for all vesicle releases</li>
 									</ol>
 
 									<hr class="major" />
 									<h2>Next Steps</h2>
-									<h3>Push implementation and transportation</h3>
-
-									<ol>
-										<li>Implementing the auditory nerve components</li>
-									</ol>
-
 									<h3>Building the Environmental Response System (ERS)</h3>
 
 									<ol>
@@ -92,21 +85,14 @@
 									</ol>
 
 									<hr class="major" />
-									<h2>IHC Transduction and Ribbon Synapse</h2>
+									<h2>Phase Locking and Auditory Nerve Spikes</h2>
 
 									<p>
-										As discussed previously, the basilar membrane and its supplementary mechanisms constitute the primary transducers in a mammalian ear. Along with tonotopy, those supplementary mechanisms are
+										As the mammalian ear evolved over time, and with the introduction of artificial sounds (electronic music, media, city noises, etc), the ability to discern subtle changes in pitches / frequencies has become paramount. <a href = "https://www.sciencedirect.com/topics/psychology/phase-locking#:~:text=Phase%20locking%20refers%20to%20the,studies%20of%20the%20auditory%20system.">Phase locking</a> is a key mechanism that preserves these subtleties until they reach the auditory cortex. This mechanism handles sounds at different frequencies according to the below - 
 										<ol>
-											<li>Inner hair cells (IHC) to <a href = "https://pmc.ncbi.nlm.nih.gov/articles/PMC4101631/">mechanoelectrical transduction (MET)</a> - When the basilar membrane vibrates, inner hair cells’ stereocilia “bend” underneath them. The intensity of the bend is proportional to the loudness of the wave at that instant. Moreover, when these cells bend, tiny gates called MET channels are opened which releases a current to the IHC. The organization of these channels ensures that they scale exponentially up until a saturation point, similar to a sigmoid curve in mathematics. An interesting inference from this mechanism is that in young people, this scaling is exponential while in older people, it is linear. That’s why the latter group has a hard time hearing!</li>
-											<li>Receptor potential smoothing and voltage gated Ca2+ ion signals - A secondary function of the basilar membrane is to smooth vibrations over a small time period of ~1 ms, so that IHCs aren’t overwhelmed. And as current is generated via MET channels, there are voltage-gated Calcium ion channels deep in the IHCs which signal the <a href = "https://en.wikipedia.org/wiki/Synaptic_vesicle">neurotransmitter vesicles</a> to be released from ribbons</li>
-											<li>
-												Ribbon synapse - It essentially consists of three pools that interact with each other during polarization and depolarization
-												<ul>
-													<li>Ready pool - This pool contains vesicles which are ready to be transmitted as Ca2+ ions polarize in the IHC</li>
-													<li>Cleft harbor - Once a vesicle <a href = "https://en.wikipedia.org/wiki/Vesicle_fusion">fuses</a>, the neurotransmitters in them are released to form the synapses sent to the brain. This is the pool at the other end of the IHC</li>
-													<li>Recycling pool - This pool contains the empty vesicles pulled back and are ready to be refilled, so that they can return to the ready pool as the process repeats endlessly</li>
-												</ul>
-											</li>
+											<li>Phase locking for frequencies up to 1 kHz - the IHC receptor potential moves with the “bending” of the stereocilia on the basilar membrane. As the potential rises and falls, so does the Ca2+ current generated in the IHC for vesicle departure. Although the vesicles’ departure from the ribbon synapse is stochastic, over time, it synchronizes with the sound wave from the basilar membrane. Once the vesicles dump neurotransmitters (glutamate to be specific) into the cleft harbor, a <a href = "https://link.springer.com/rwe/10.1007/978-3-540-29678-2_4701">postsynaptic current</a> is created and the auditory nerve fiber membrane’s potential crosses the threshold at exactly the same phase as the basilar membrane waveform. Therefore, the phase is “locked” with the incoming waveform and pitch subtleties are preserved</li>
+											<li>Phase locking for frequencies up to 4-5 kHz -  For these frequencies, everything upto vesicle release stays the same. However, as spiral ganglion cells cannot fire at frequencies above 1 kHz (due to their refractory / recoil period being around 800 microseconds), the ear uses the <a href = "https://en.m.wikipedia.org/wiki/Volley_theory">Volley principle</a> to ensure that spike generation isn't affected - a group of nerve fibers fire at different consecutive cycles but at the same phase angle, so the auditory cortex perceives these frequencies in the same way as those under 1 kHz</li>
+											<li>Tonotopy for frequencies > 5 kHz - As these frequencies are less subtle, the brain interprets them through tonotopy (which was discussed in an earlier report)</li>
 										</ol>
 									</p>
 
