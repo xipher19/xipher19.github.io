@@ -1,1 +1,165 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Auditory Nerves</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on building the remaining audio CMU components after the IHC. This includes the <a href="https://en.m.wikipedia.org/wiki/Spiral_ganglion">spiral ganglion cell</a> and neurotransmitter release in the auditory nerve.</p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the Auditory Nerve components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/cmu/transportation/audio.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Push implementation and transportation</h3>
+
+									Auditory Nerve Fiber implementation v1 <br><br>
+
+									<ol>
+										<li>Define biologically accurate constants for the auditory nerve fibers</li>
+										<li>If the AN fiber is in the refractory (cool down) period, do nothing</li>
+										<li>
+											Else,
+											<ul>
+												<li>The change in potential dV is defined according to the leaky integrate model</li>
+												<li>Add a stochastic component to dV (optional)</li>
+												<li>Add dV to the instantaneous potential of the membrane</li>
+												<li>If the spike condition is met, generate a spike!</li>
+											</ul>
+										</li>
+										<li>Generate spike trains for all vesicle releases</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the visual cortex</li>
+										<li>Building the auditory cortex</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. <i>Neurotransmitters (and their lifecycles) can be added later during ERU development</i></li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Phase Locking and Auditory Nerve Spikes</h2>
+
+									<p>
+										As the mammalian ear evolved over time, and with the introduction of artificial sounds (electronic music, media, city noises, etc), the ability to discern subtle changes in pitches / frequencies has become paramount. <a href = "https://www.sciencedirect.com/topics/psychology/phase-locking#:~:text=Phase%20locking%20refers%20to%20the,studies%20of%20the%20auditory%20system.">Phase locking</a> is a key mechanism that preserves these subtleties until they reach the auditory cortex. This mechanism handles sounds at different frequencies according to the below - 
+										<ol>
+											<li>Phase locking for frequencies up to 1 kHz - the IHC receptor potential moves with the “bending” of the stereocilia on the basilar membrane. As the potential rises and falls, so does the Ca<sup>2+</sup> current generated in the IHC for vesicle departure. Although the vesicles’ departure from the ribbon synapse is stochastic, over time, it synchronizes with the sound wave from the basilar membrane. Once the vesicles dump neurotransmitters (glutamate to be specific) into the cleft harbor, a <a href = "https://link.springer.com/rwe/10.1007/978-3-540-29678-2_4701">postsynaptic current</a> is created and the auditory nerve fiber membrane’s potential crosses the threshold at exactly the same phase as the basilar membrane waveform. Therefore, the phase is “locked” with the incoming waveform and pitch subtleties are preserved</li>
+											<li>Phase locking for frequencies up to 4-5 kHz -  For these frequencies, everything upto vesicle release stays the same. However, as spiral ganglion cells cannot fire at frequencies above 1 kHz (due to their refractory / recoil period being around 800 microseconds), the ear uses the <a href = "https://en.m.wikipedia.org/wiki/Volley_theory">Volley principle</a> to ensure that spike generation isn't affected - a group of nerve fibers fire at consecutive cycles but at the same phase angle, so the auditory cortex perceives these frequencies in the same way as those under 1 kHz</li>
+											<li>Tonotopy for frequencies > 5 kHz - As these frequencies are less subtle, the brain interprets them through tonotopy (which was discussed in an earlier blog post)</li>
+										</ol>
+									</p>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Jun 22, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="250622.html">Jun 22 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
