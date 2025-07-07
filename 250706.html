@@ -1,1 +1,228 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Auditory Cortex</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on the implementation of the <a href = "https://www.ncbi.nlm.nih.gov/books/NBK10900/">A1 primary auditory cortex</a> and the early <a href="https://en.wikipedia.org/wiki/Brainstem">brainstem</a> where the spike trains from the auditory nerve arrive.</p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the brainstem components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/audio/early_brainstem.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/audio/early_brainstem.py</a> <br>
+										Building the auditory cortex components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/audio/a1_cortex.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/audio/a1_cortex.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>ERU Development</h3>
+
+									Bushy cell implementation v1 <br><br>
+
+									<ol>
+										<li>Initialize biologically-accurate cell constants (such as resting membrane potential, spike current, refractory period, etc)</li>
+										<li>For each channel / tonotopy frequency “hole”
+											<ul>
+												<li>For each spike in spike train
+													<ul>
+														<li>If spike exists, advance membrane potential by dt given synaptic input current I_syn</li>
+														<li><b>If voltage crosses threshold, signal</b></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ol>
+
+									Octopus cell implementation v1 <br><br>
+
+									<ol>
+										<li>Initialize <b>a different set of</b> biologically-accurate cell constants (such as resting membrane potential, spike current, refractory period, etc)</li>
+										<li>For each channel / tonotopy frequency “hole”
+											<ul>
+												<li>For each spike in spike train
+													<ul>
+														<li>If spike exists, advance membrane potential by dt given synaptic input current I_syn</li>
+														<li><b>If voltage crosses threshold, signal</b></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ol>
+
+									Chopper cell implementation v1 <br><br>
+
+									<ol>
+										<li>Initialize <b>a different set of</b> biologically-accurate cell constants (such as resting membrane potential, spike current, refractory period, etc)</li>
+										<li>For each channel / tonotopy frequency “hole”
+											<ul>
+												<li>For each spike in spike train
+													<ul>
+														<li>If spike exists, advance membrane potential by dt given synaptic input current I_syn</li>
+														<li><b>If voltage crosses threshold, signal</b></li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ol>
+
+									<a href="https://en.wikipedia.org/wiki/Superior_olivary_complex#Medial_superior_olive_(MSO)">Medial superior olive</a> implementation v1 <br><br>
+
+									<ol>
+										<li><b>Note: These cells are helpful only if the audio CMU is binaural i.e., if two cochlear units are built, one for each ear</b></li>
+										<li>For a predetermined set of delays
+											<ul>
+												<li>Match the spikes between right and left ear</li>
+											</ul>
+										</li>
+										<li>If spikes cross a threshold at any given delay (for example, if right is 100 microseconds slower than the left, then t-d of right will coincide with t of left, and d is determined as 100 microseconds), record the delay and timestamp</li>
+										<li>Feed this info into the efferent feedback</li>
+									</ol>
+
+									<a href="https://en.wikipedia.org/wiki/Superior_olivary_complex#Lateral_superior_olive_(LSO)">Lateral superior olive</a> implementation v1 <br><br>
+
+									<ol>
+										<li><b>Note: These cells are helpful only if the audio CMU is binaural i.e., if two cochlear units are built, one for each ear</b></li>
+										<li>Compare the spike pattern between both ears</li>
+										<li>At any given point in time, if a spike is recorded in one ear and not in the other, record the timestamp</li>
+										<li>Feed this info into the efferent feedback</li>
+									</ol>
+
+									<a href="https://www.sciencedirect.com/topics/immunology-and-microbiology/primary-auditory-cortex">Primary Auditory Cortex</a> implementation v1 <br><br>
+
+									<ol>
+										<li>Define the STRF (spectro temporal receptive field) i.e., a 2D array for each neuron with different spectrotemporal affinities. These group of neurons contribute to <a href="https://en.wikipedia.org/wiki/Neural_coding#Population_coding">population coding</a></li>
+										<li><b>(Placeholder logic)</b> Define the dynamics of a biological neuron synapse (now that we’re “entered” the brain)</li>
+										<li><b>(Placeholder logic)</b> Define the mechanics of when a neuron should fire spikes (based on accumulating membrane potential)</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the visual cortex</li>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus. <i>Neurotransmitters (and their lifecycles) can be added later during ERU development</i></li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<hr class="major" />
+									<h2>The (Early) Brainstem</h2>
+
+									<p>When (tonotopically arranged) stimulus arrives at the brainstem - the portion of the brain that houses the <a href="https://en.wikipedia.org/wiki/Thalamus">thalamus</a> and <a href="https://en.wikipedia.org/wiki/Medulla_oblongata">medulla oblongata</a>, for example - it adds context to each channel as follows</p>
+
+									<ol>
+										<li><a href="https://en.wikipedia.org/wiki/Bushy_cell">Bushy cells</a> - These cells (with a low voltage threshold and refractory period) examine the auditory nerve <a href="https://en.wikipedia.org/wiki/Volley_theory">volleys</a> to detect coincidences, and precisely signal when spike trains arrive </li>
+										<li><a href="https://en.wikipedia.org/wiki/Cochlear_nucleus#Histology">Octopus cells</a> - These cells examine the channel for a sharp increase in stimulus (or a high voltage change), signaling the beginning of any sound at that frequency, simple or complex</li>
+										<li><a href="https://ieeexplore.ieee.org/document/6796700">Chopper cells</a> - These cells examine the waveform for periodicity i.e., when in a given frequency channel, if the synaptic current is sustained, the implication is that the said frequency keeps repeating in the sound waveform</li>
+									</ol><br>
+
+									<p>Additionally, the brainstem also feeds back into the cochlea through efferent fibers (for context, these fibers are used by the outer hair cells to modulate their <a href="https://en.wikipedia.org/wiki/Prestin">prestin</a> gain / elasticity) after measuring the binaural differences in energy. This explicit mechanism, much like the neurotransmitters in the retina, sharply contrasts with the implicit (and slow) backprop feedback mechanisms of current AI systems.</p>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Jul 06, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
