@@ -32,7 +32,7 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>Auditory Cortex</h1>
+										<h1>The Brainstem</h1>
 									</header>
 
 									<p>In the past two weeks, I’ve focused on the implementation of the <a href = "https://www.ncbi.nlm.nih.gov/books/NBK10900/">A1 primary auditory cortex</a> and the early <a href="https://en.wikipedia.org/wiki/Brainstem">brainstem</a> where the spike trains from the auditory nerve arrive.</p>
@@ -102,11 +102,7 @@
 
 									<ol>
 										<li><b>Note: These cells are helpful only if the audio CMU is binaural i.e., if two cochlear units are built, one for each ear</b></li>
-										<li>For a predetermined set of delays
-											<ul>
-												<li>Match the spikes between right and left ear</li>
-											</ul>
-										</li>
+										<li>For a predetermined set of delays, match the spikes between right and left ear</li>
 										<li>If spikes cross a threshold at any given delay (for example, if right is 100 microseconds slower than the left, then t-d of right will coincide with t of left, and d is determined as 100 microseconds), record the delay and timestamp</li>
 										<li>Feed this info into the efferent feedback</li>
 									</ol>
