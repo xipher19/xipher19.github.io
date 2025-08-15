@@ -32,56 +32,83 @@
 							<!-- Content -->
 								<section>
 									<header class="main">
-										<h1>The Visual Cortex</h1>
+										<h1>Interneurons</h1>
 									</header>
 
-									<p>In the past two weeks, I’ve focused on building similar structures and mechanisms for vision i.e., bridging the ganglion cells and the ERUs via the <a href="https://en.wikipedia.org/wiki/Visual_cortex">visual cortex</a> (V1, V2 and so on).</p>
+									<p>In the past two weeks, I’ve focused on developing the most common class of neurons in the brain - the interneurons. These neurons have thousands of subtypes and functions, based on their shape and structure. However, they all have the below common design with variations derived from it. These variations are created during <a href="https://en.wikipedia.org/wiki/Neurogenesis">neurogenesis</a>, the lifelong creation and recycling of neurons, and reside in different regions of the brain.</p>
 
 									<hr class="major" />
-									<h2>The Visual Cortex</h2>
-									<h3>Architecture</h3>
+									<h2>Interneurons and its connection to ERUs</h2>
+									<h3>Interneuron Labelled Diagram</h3>
 
-									<p><span class="image main"><img src="images/Visual Cortex.jpg" alt="" /></span></p>
+									<p><span class="image main"><img src="images/Interneuron.jpg" alt="" /></span></p>
 
-									<h3>Components</h3>
+									<h3>Comparison</h3>
 
-									<ol>
-										<li><a href="https://en.wikipedia.org/wiki/Lateral_geniculate_nucleus">Lateral Geniculate Nucleus (LGN)</a> - Relays center surround retinal outputs in tonic and burst modes - depending on how active the eyes have been in the immediate past. Also, segregates the p-type and m-type ganglion cell streams</li>
-										<li>V1 Primary Visual Cortex
-											<ul>
-												<li>Layer 4 - Cells detect edges and motion</li>
-												<li>Layer 2/3 - Integrates and reinforces lines in the same orientation, essentially stitching together small visual field stimuli</li>
-												<li>Layer 5/6 - Feedback mechanisms to tune LGN / Layer 4 and transmit horizontally normalized signals</li>
-											</ul>
-										</li>
-										<li>V2 Secondary Visual Cortex - Groups edges to detect corners, foreground, background, etc</li>
-										<li>V4 Tertiary Visual Cortex - Groups corners into curves while mapping hue and color combinations with invariance to lighting and viewpoint (via <a href="https://en.wikipedia.org/wiki/Neural_coding#Population_coding">population coding</a>)</li>
-										<li>Inferotemporal Cortex (IT) - Houses neurons tuned to complex objects and faces, invariant to position and scale (again, via population coding). <i>Note: the brain’s associative memory starts here, from the IT cortex itself!</i></li>
-									</ol>
+									<p>
+										<table>
+										  <tr>
+										    <th>Brain cell component</th>
+										    <th>Corresponding ERU component</th>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Synapse">Synapse</a></td>
+										    <td>Neurotransmitter release - Vesicles carrying specific neurotransmitters arrive at the mouth of the ERU</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Neurotransmitter_receptor">Receptor</a></td>
+										    <td>Mouth of the ERU - Based on the code for each neurotransmitter, perform a biologically-grounded effect on the ERU Mouth / receptor</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Dendrite">Dendrites</a></td>
+										    <td>Mouth of the ERU - Waveform dynamics, scaling and aggregation of neurotransmitter effects simulate dendrite ion channels</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Soma_(biology)">Soma</a> / Nucleus</td>
+										    <td>As genetics and metabolism aren’t a part of ERS at this point, a separate nucleus is absent from the ERU design</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Axon">Axon Terminal</a></td>
+										    <td>Neurotransmitter cores - Different types of cores are placed by the motivation targets at the twists of the ERU’s double helix, during neurogenesis</td>
+										  </tr>
+										</table>
+									</p>
 
 									<hr class="major" />
 
 									<h2>Algorithms / Development</h2>
 									<h3>Building the Environmental Response System (ERS)</h3>
 
-									LGN implementation v1 <br><br>
+									Biophysical Multi-Compartment Interneuron with <a href="https://arxiv.org/html/2506.20233v1#S2">Hodgkin-Huxley channels</a> implementation v1 <br><br>
 
 									<ol>
-										<li>Define the tonic and burst modes</li>
-										<li>Define a center surround gaussian kernel which convolves on the incoming spike stream</li>
-										<li>Apply a mode based on the neurotransmitters from later stages, <b>essentially creating a systemic modulatory loop</b></li>
+										<li>For each time instant
+											<ul>
+												<li>For each receptor
+													<ul>
+														<li>Apply presynaptic releases instantly to synapses</li>
+														<li>Evolve Soma, Dendrite, Na+ / K+ variables according to Hodgkin-Huxley dynamics <b>(inherit waveform dynamics from Beads design)</b></li>
+													</ul>
+												</li>
+												<li>Record soma voltage for postsynaptic current (through the Axon)</li>
+											</ul>
+										</li>
 									</ol>
 
-									V1 / V2 / V4 / IT implementation v1 <br><br>
+									Biophysical Receptor with <a href="https://en.wikipedia.org/wiki/NMDA_receptor">NMDA-like (Glutamate)</a> implementation v1 <br><br>
 
 									<ol>
-										<li>Define the STRF (spectro temporal receptive field) i.e., a 3D array for each neuron with different <b>contrast-colour-direction</b> affinities. These group of neurons contribute to population coding</li>
-										<li>Hierarchically, create an array-like field with different affinities (<b>Needs better logic</b>)</li>
+										<li>Compute Mg2+ blocking factor B(V) in the range [0,1]
+											<ul>
+												<li>If voltage is negative, block stimulus from synapse</li>
+												<li>If voltage is positive, amplify synapse’s stimulus. <b>The placement of this receptor is key for the “aha” moments in your brain. For example, if placed at the end of the “aaaa” “ppp” “ellll” route from the auditory cortex, it pushes for further thought, as the word ‘apple’ is detected and focus is concentrated on this neuron. This behaviour is central to feeling / experience, memory and logic, and is the essence of the ERS build</b></li>
+											</ul>
+										</li>
 									</ol>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
-										Building the visual cortex components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py</a>
+										Building the interneuron - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/commons.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/commons.py</a>
 									</p>
 
 									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
@@ -91,7 +118,7 @@
 									<h3>Building the Environmental Response System (ERS)</h3>
 
 									<ol>
-										<li>Refining the cortices</li>
+										<li>Refining the visual cortex</li>
 										<li>Building the ERUs</li>
 										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
 										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
@@ -109,7 +136,7 @@
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Aug 02, 2025</span>
+									<span class="date">Created Aug 15, 2025</span>
 								</footer>
 								<br>
 
