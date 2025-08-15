@@ -1,1 +1,177 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>The Visual Cortex</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on building similar structures and mechanisms for vision i.e., bridging the ganglion cells and the ERUs via the <a href="https://en.wikipedia.org/wiki/Visual_cortex">visual cortex</a> (V1, V2 and so on).</p>
+
+									<hr class="major" />
+									<h2>The Visual Cortex</h2>
+									<h3>Architecture</h3>
+
+									<p><span class="image main"><img src="images/Visual Cortex.jpg" alt="" /></span></p>
+
+									<h3>Components</h3>
+
+									<ol>
+										<li><a href="https://en.wikipedia.org/wiki/Lateral_geniculate_nucleus">Lateral Geniculate Nucleus (LGN)</a> - Relays center surround retinal outputs in tonic and burst modes - depending on how active the eyes have been in the immediate past. Also, segregates the p-type and m-type ganglion cell streams</li>
+										<li>V1 Primary Visual Cortex
+											<ul>
+												<li>Layer 4 - Cells detect edges and motion</li>
+												<li>Layer 2/3 - Integrates and reinforces lines in the same orientation, essentially stitching together small visual field stimuli</li>
+												<li>Layer 5/6 - Feedback mechanisms to tune LGN / Layer 4 and transmit horizontally normalized signals</li>
+											</ul>
+										</li>
+										<li>V2 Secondary Visual Cortex - Groups edges to detect corners, foreground, background, etc</li>
+										<li>V4 Tertiary Visual Cortex - Groups corners into curves while mapping hue and color combinations with invariance to lighting and viewpoint (via <a href="https://en.wikipedia.org/wiki/Neural_coding#Population_coding">population coding</a>)</li>
+										<li>Inferotemporal Cortex (IT) - Houses neurons tuned to complex objects and faces, invariant to position and scale (again, via population coding). <i>Note: the brain’s associative memory starts here, from the IT cortex itself!</i></li>
+									</ol>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									LGN implementation v1 <br><br>
+
+									<ol>
+										<li>Define the tonic and burst modes</li>
+										<li>Define a center surround gaussian kernel which convolves on the incoming spike stream</li>
+										<li>Apply a mode based on the neurotransmitters from later stages, <b>essentially creating a systemic modulatory loop</b></li>
+									</ol>
+
+									V1 / V2 / V4 / IT implementation v1 <br><br>
+
+									<ol>
+										<li>Define the STRF (spectro temporal receptive field) i.e., a 3D array for each neuron with different <b>contrast-colour-direction</b> affinities. These group of neurons contribute to population coding</li>
+										<li>Hierarchically, create an array-like field with different affinities (<b>Needs better logic</b>)</li>
+									</ol>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the visual cortex components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Refining the cortices</li>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
+										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Aug 02, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+                        <li><a href="250815.html">Aug 15 2025 Update</a></li>
+												<li><a href="250802.html">Aug 02 2025 Update</a></li>
+												<li><a href="250720.html">Jul 20 2025 Update</a></li>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
