@@ -1,1 +1,206 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Interneurons</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on developing the most common class of neurons in the brain - the interneurons. These neurons have thousands of subtypes and functions, based on their shape and structure. However, they all have the below common design with variations derived from it. These variations are created during <a href="https://en.wikipedia.org/wiki/Neurogenesis">neurogenesis</a>, the lifelong creation and recycling of neurons, and reside in different regions of the brain.</p>
+
+									<hr class="major" />
+									<h2>Interneurons and its connection to ERUs</h2>
+									<h3>Interneuron Labelled Diagram</h3>
+
+									<p><span class="image main" style="width:50%"><img src="images/Interneuron.jpg" alt="" /></span></p>
+									<i>File:Neuron Part 1.png. (2019, April 18). Physiopedia, . Retrieved 23:11, August 15, 2025 from https://www.physio-pedia.com/index.php?title=File:Neuron_Part_1.png&oldid=209108.</i>
+
+									<h3>Comparison</h3>
+
+									<p>
+										<table>
+										  <tr>
+										    <th>Brain cell component</th>
+										    <th>Corresponding ERU component</th>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Synapse">Synapse</a></td>
+										    <td>Neurotransmitter release - Vesicles carrying specific neurotransmitters arrive at the mouth of the ERU</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Neurotransmitter_receptor">Receptor</a></td>
+										    <td>Mouth of the ERU - Based on the code for each neurotransmitter, perform a biologically-grounded effect on the ERU Mouth / receptor</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Dendrite">Dendrites</a></td>
+										    <td>Mouth of the ERU - Waveform dynamics, scaling and aggregation of neurotransmitter effects simulate dendrite ion channels</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Soma_(biology)">Soma</a> / Nucleus</td>
+										    <td>As genetics and metabolism aren’t a part of ERS at this point, a separate nucleus is absent from the ERU design</td>
+										  </tr>
+										  <tr>
+										    <td><a href="https://en.wikipedia.org/wiki/Axon">Axon Terminal</a></td>
+										    <td>Neurotransmitter cores - Different types of cores are placed by the motivation targets at the twists of the ERU’s double helix, during neurogenesis</td>
+										  </tr>
+										</table>
+									</p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									Biophysical Multi-Compartment Interneuron with <a href="https://arxiv.org/html/2506.20233v1#S2">Hodgkin-Huxley channels</a> implementation v1 <br><br>
+
+									<ol>
+										<li>For each time instant
+											<ul>
+												<li>For each receptor
+													<ul>
+														<li>Apply presynaptic releases instantly to synapses</li>
+														<li>Evolve Soma, Dendrite, Na+ / K+ variables according to Hodgkin-Huxley dynamics <b>(inherit waveform dynamics from Beads design)</b></li>
+													</ul>
+												</li>
+												<li>Record soma voltage for postsynaptic current (through the Axon)</li>
+											</ul>
+										</li>
+									</ol>
+
+									Biophysical Receptor with <a href="https://en.wikipedia.org/wiki/NMDA_receptor">NMDA-like (Glutamate)</a> implementation v1 <br><br>
+
+									<ol>
+										<li>Compute Mg2+ blocking factor B(V) in the range [0,1]
+											<ul>
+												<li>If voltage is negative, block stimulus from synapse</li>
+												<li>If voltage is positive, amplify synapse’s stimulus. <b>The placement of this receptor is key for the “aha” moments in your brain. For example, if placed at the end of the “aaaa” “ppp” “ellll” route from the auditory cortex, it pushes for further thought, as the word ‘apple’ is detected and focus is concentrated on this neuron. This behaviour is central to feeling / experience, memory and logic, and is the essence of the ERS build</b></li>
+											</ul>
+										</li>
+									</ol>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the interneuron - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/commons.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/commons.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Refining the visual cortex</li>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
+										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
+									</ol>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Aug 15, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+                        <li><a href="250903.html">Sep 03 2025 Update</a></li>
+                        <li><a href="250815.html">Aug 15 2025 Update</a></li>
+												<li><a href="250802.html">Aug 02 2025 Update</a></li>
+												<li><a href="250720.html">Jul 20 2025 Update</a></li>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
