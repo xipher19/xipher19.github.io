@@ -1,1 +1,251 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Visual Cortex v2</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve focused on refining the visual cortex implementation. In the previous iteration, the visual ERUs lacked biological fidelity; so to mirror the audio cortex, I implemented each visual cortex level as its own micro environment, with feedback mechanisms and nonlinear controls. </p>
+
+									<hr class="major" />
+									<h2>Cortices Development Retrospective</h2>
+
+									<p>After reviewing my past notes, here are the design elements that I aimed for and how well the implementation fits to that design -</p>
+
+									<p>
+										<table>
+										  <tr>
+										    <th>Design Requirement</th>
+										    <th>Implementation Specifics (Audio and Visual)</th>
+										  </tr>
+										  <tr>
+										    <td>(Smooth) Stimulus transduction</td>
+										    <td>Early brainstem in auditory cortex; LGN in visual cortex</td>
+										  </tr>
+										  <tr>
+										    <td>Hub-like routing</td>
+										    <td><a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/interneuron.py">Multicompartment interneurons</a></td>
+										  </tr>
+										  <tr>
+										    <td>Hierarchical abstractions</td>
+										    <td>V2, V4 and IT in visual cortex; interneuron routing in auditory cortex</td>
+										  </tr>
+										  <tr>
+										    <td>Feedback mechanisms</td>
+										    <td>Neuromodulators feed back into LGN & L4 in V1; Efferent feedback into outer hair cells</td>
+										  </tr>
+										  <tr>
+										    <td>Basic memory / bias formation</td>
+										    <td>IT in visual cortex</td>
+										  </tr>
+										</table>
+									</p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									LGN implementation v2 <br><br>
+
+									<ol>
+										<li>Define a center-surround mechanism (similar to that in horizontal cells) and temporal kernels for <a href="https://pressbooks.umn.edu/sensationandperception/chapter/magnocellular-and-parvocellular-pathways/">magnocellular/parvocellular</a> channels from midget/parasol cells</li>
+										<li>If activity < threshold:
+											<ul>
+												<li>Use burst mode for increased LGN gain</li>
+											</ul>
+										</li>
+										<li>Else:
+											<ul>
+												<li>Use tonic mode for moderate LGN gain</li>
+											</ul>
+										</li>
+										<li>Apply second-level center-surround filtering (in addition to horizontal cells in the retina), to enhance edges</li>
+									</ol>
+
+									Visual spatial-temporal receptive field (STRF) implementation v1 <br><br>
+
+									<ol>
+										<li>Note: It works similar to a 3D STRF with spatial and temporal components</li>
+										<li>Define a spatial map with Gaussian-cosine <a href="https://en.wikipedia.org/wiki/Gabor_filter">gabor</a></li>
+										<li>Define a temporal map with Gaussian-cosine gabor</li>
+										<li>Convolute the incoming (stream of) spikes onto the STRF</li>
+									</ol>
+
+									V1 implementation v2 <br><br>
+
+									<ol>
+										<li>For each L4 unit:
+											<ul>
+												<li>It focuses on a patch in the receptive field and applies the visual STRF</li>
+												<li>The STRF output is converted into synapses, which have their own dynamics (fatigue and facilitations)</li>
+												<li>The neuron then integrates those currents and fires if needed. This step is equivalent to <a href="https://en.wikipedia.org/wiki/Pooling_layer">pooling</a> / the activation layer in CNN-like models</li>
+											</ul>
+										</li>
+										<li>For each L2/3 unit:
+											<ul>
+												<li>Pool nearby L4 units and connect collinear segments</li>
+												<li>Coincidental (and oriented) segments are <b>assumed</b> to be part of a longer segment, so horizontal facilitation improves synapse drive in the neighborhood</li>
+											</ul>
+										</li>
+										<li>For each 5/6 unit:
+											<ul>
+												<li>It holistically observes the drive of L2/3 units and via neuromodulators, feeds back into L4 / LGN gain</li>
+											</ul>
+										</li>
+									</ol>
+
+									V2 implementation v2 <br><br>
+
+									<ol>
+										<li>Note: these cells primarily detect edges and corners</li>
+										<li>Multiply synapses to detect coincidences. Only when both synapses are strong, the V2 neurons fire</li>
+										<li>Note: the pre-neurons are connected in different orientations to detect T-junctions and L curves</li>
+										<li>Use neural dynamics to spike when threshold (of -30 mV) is crossed</li>
+									</ol>
+
+									V4 implementation v2 <br><br>
+
+									<ol>
+										<li>Similar in operation to V2, the V4 cells detect curves</li>
+										<li>Normalize luminance to reduce sensitivity to lighting (color invariance)</li>
+										<li>Linearly pool synapses to detect curves. Only when both synapses are strong, the V4 neurons fire</li>
+									</ol>
+
+									IT implementation v2 <br><br>
+
+									<ol>
+										<li>IT cells establish “routes” i.e., chains of neurons when fired in a particular sequence, which would result in <a href="https://en.wikipedia.org/wiki/Glutamate_(neurotransmitter)">Glutamate</a> (Glu) release. <b>These routes and releases are how thoughts occur in your brain</b></li>
+										<li>When a route is traced, fire Glu spikes in the target neuron</li>
+									</ol>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+										Building the visual cortex components - <a href="https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py">https://github.com/akhil-reddy/beads/blob/main/beads/core/eru/hub/visual/v_cortex.py</a>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Post processing in the visual cortex</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Post processing in the auditory cortex</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
+										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Sep 15, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+                        <li><a href="250915.html">Sep 15 2025 Update</a></li>
+						            <li><a href="250903.html">Sep 03 2025 Update</a></li>
+						            <li><a href="250815.html">Aug 15 2025 Update</a></li>
+												<li><a href="250802.html">Aug 02 2025 Update</a></li>
+												<li><a href="250720.html">Jul 20 2025 Update</a></li>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
