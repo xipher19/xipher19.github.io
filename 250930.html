@@ -35,92 +35,19 @@
 										<h1>Deployment</h1>
 									</header>
 
-									<p>In the past two weeks, I’ve focused on streamlining cell code, so they can be readily deployed in a concurrent execution environment. Additionally, I was exploring feasible technologies that can 1) run CMUs + cortices 2) collect real-time data to generate knowledge and 3) have a periodic management mechanism which corrects stored knowledge. </p>
+									<p>In the past two weeks, I’ve focused on integrating the (developed) cell functionalities together i.e., fixing mismatched types, data frequency, evaluating concurrency, etc. As they were built separately, a cohesive architecture (such as the one below) helps with integration. Since testing is predominant during the deployment phase, new algorithms are rarely developed and old ones are limited to type mismatch updates. </p>
 
 									<hr class="major" />
-									<h2>Evaluating Technologies for CMUs and Cortices</h2>
+									<h2>Enhanced Auditory Architecture</h2>
 
-									<p>Now that the algorithms are developed for two Beads components, the below evaluation helps in choosing the right technologies for deployment -</p>
-
-									<p>
-										<table>
-										  <tr>
-										    <th>Design Requirement</th>
-										    <th>Local python threads with in-memory data</th>
-										    <th><a href="https://redis.io/docs/latest/develop/data-types/streams/">Redis streams</a> / <a href="https://docs.celeryq.dev/en/latest/index.html">Celery</a></th>
-										    <th><a href="https://kafka.apache.org">Kafka</a> with microservices</th>
-										  </tr>
-										  <tr>
-										    <td>Integration with existing code</td>
-										    <td>Trivial / excellent</td>
-										    <td>Excellent (redis-py, celery)</td>
-										    <td>Excellent (containers can run python code)</td>
-										  </tr>
-										  <tr>
-										    <td>End-to-end latency</td>
-										    <td>Excellent</td>
-										    <td>Good (local workers have low latency, networked workers don’t)</td>
-										    <td>Moderate (distributed computing adds overhead)</td>
-										  </tr>
-										  <tr>
-										    <td>Throughput</td>
-										    <td>Limited by a single host’s CPU / memory. Might cause lags for millions of cells</td>
-										    <td>Good (celery can scale workers but the network can be a bottleneck)</td>
-										    <td>Excellent</td>
-										  </tr>
-										  <tr>
-										    <td>Resiliency</td>
-										    <td>Poor by default; data is lost if system shuts down unexpectedly</td>
-										    <td>Moderate (Redis persistence helps)</td>
-										    <td>Excellent when deployed well</td>
-										  </tr>
-										  <tr>
-										    <td>Operational complexity</td>
-										    <td>Lowest</td>
-										    <td>Moderate (simple monitoring; run Redis and workers)</td>
-										    <td>High (needs Kafka broker configuration, monitoring, Kubernetes, etc) </td>
-										  </tr>
-										  <tr>
-										    <td>Scaling</td>
-										    <td>Poor</td>
-										    <td>Moderate (simply add workers)</td>
-										    <td>Excellent (scale producers / consumers independently)</td>
-										  </tr>
-										  <tr>
-										    <td>Cost</td>
-										    <td>Lowest</td>
-										    <td>Moderate (needs cloud VMs)</td>
-										    <td>High (multiple cloud nodes and ops effort)</td>
-										  </tr>
-										  <tr>
-										    <td>Handling large binary streams</td>
-										    <td>Best for passing in-memory arrays but memory requirements add up quickly </td>
-										    <td>Message serialization overhead</td>
-										    <td>Can store pointers in Kafka and objects in store, but impacts latency</td>
-										  </tr>
-										  <tr>
-										    <td>Suitability for real-time closed loop experiments</td>
-										    <td>Best (as processes can be restarted quickly)</td>
-										    <td>Reasonable if workers are colocated; still extra latency vs in-process but workable for many closed-loop timings</td>
-										    <td>Network hops and broker overhead can severely impact latency</td>
-										  </tr>
-										  <tr>
-										    <td>Integration with GPU</td>
-										    <td>Good</td>
-										    <td>Good (depends on worker nodes)</td>
-										    <td>Good (depends on worker nodes)</td>
-										  </tr>
-										</table>
-									</p>
-
-									<p>Based on the above, I think it is prudent to host cells that need extreme concurrency (like photoreceptors) on machines with GPU support. However, to ensure the end-to-end pipeline works, the ability to run real-time closed loop experiments is more important.</p>
+									<p><span class="image main" style="width:50%"><img src="images/Enhanced Auditory Architecture.jpg" alt="" /></span></p>
 
 									<hr class="major" />
 
 									<h2>Algorithms / Development</h2>
 									<h3>CMU Development</h3>
 
-									<p><i>Minor tweaks across the retina, to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
+									<p><i>Minor tweaks across the audio CMU, cochlea and cortex; to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
@@ -153,7 +80,7 @@
 
 								<hr class="major" />
 								<footer>
-									<span class="date">Created Sep 15, 2025</span>
+									<span class="date">Created Sep 30, 2025</span>
 								</footer>
 								<br>
 
@@ -175,10 +102,10 @@
 										<li>
 											<span class="opener">Blog</span>
 											<ul>
-                        <li><a href="250930.html">Sep 30 2025 Update</a></li>
-                        <li><a href="250915.html">Sep 15 2025 Update</a></li>
-						            <li><a href="250903.html">Sep 03 2025 Update</a></li>
-						            <li><a href="250815.html">Aug 15 2025 Update</a></li>
+                        						<li><a href="250930.html">Sep 30 2025 Update</a></li>
+                        						<li><a href="250915.html">Sep 15 2025 Update</a></li>
+						            			<li><a href="250903.html">Sep 03 2025 Update</a></li>
+						            			<li><a href="250815.html">Aug 15 2025 Update</a></li>
 												<li><a href="250802.html">Aug 02 2025 Update</a></li>
 												<li><a href="250720.html">Jul 20 2025 Update</a></li>
 												<li><a href="250706.html">Jul 06 2025 Update</a></li>
