@@ -35,19 +35,60 @@
 										<h1>Deployment</h1>
 									</header>
 
-									<p>In the past two weeks, I’ve focused on the same components as the previous report i.e., concurrency, type / data mismatches, and integration in the visual pipeline.</p>
+									<p>In the past two weeks, I’ve focused on the data required to test the current architecture / system, and its availability, snapshot, frequency and expected transformations (as it moves through intricate subcomponents). I’ve also continued to fix bugs and bridge components in the audio and visual pipelines.</p>
 
 									<hr class="major" />
-									<h2>Enhanced Visual Architecture</h2>
+									<h2>Data</h2>
 
-									<p><span class="image main" style="width:50%"><img src="images/Enhanced Visual Architecture.jpg" alt="" /></span></p>
+									<h3>Availability</h3>
+
+									<p>Online (free) videos (<a href="https://www.pexels.com/video/video-aereo-15966208/">sample</a>) help with defining the range of possible stimuli. However, a video of activity <a href="https://drive.google.com/file/d/1ssYn_k2Sk1x9i_HC0gqP2TzOB1ZQxKRd/view?usp=sharing">outside my window</a> helps with realism - lack of activity, jumps in attention, glare, bad angles, odd / unexplained sounds, etc. This data is important to mirror the fidelity of human senses. Here’s a sample frame from both videos -</p>
+
+									<p><span class="image main" style="width:50%"><img src="images/Online Stored Stimulus Snapshot.jpg" alt="" /></span></p>
+
+									<p><i>Courtesy - Eduardo Lewis <a href="https://www.pexels.com/video/video-aereo-15966208/">https://www.pexels.com/video/video-aereo-15966208/</a></i></p>
+
+									<p><span class="image main" style="width:50%"><img src="images/Offline Stored Stimulus Snapshot Frame 63.jpg" alt="" /></span></p>
+
+									<p><i>Taken from my phone camera at 6 PM</i></p>
+
+									<h3>Stored vs stream</h3>
+
+									<p>In the ideal situation, a stream should be linked for hyperrealistic and grounded data but stored information is easier to manage while tuning the components.</p>
+
+									<h3>Why is this data helpful?</h3>
+
+									<p>This data defines the raw stimulus that the brain uses to get a sense of the world. Without testing these transforms (despite the lack of spike-train-data explainability post cortex), the noise / entropy of the system increases even before the interneurons can process said stimulus. Thus, this step is crucial to improve the signal to noise ratio.</p>
+
+									<h3>Expected transformation(s) of this data when it passes through the visual pipeline</h3>
+
+									<p>Using the earlier video taken from my phone as reference, I’ve split it into frames to approximately match the “frame rate” of rods. Given a subset of sample frames, here is the expected behavior after each component - </p>
+
+									<p><span class="image main" style="width:50%"><img src="images/Offline Stored Stimulus Snapshot Frame 63.jpg" alt="" /></span></p>
+
+									<p><i>Frame 63</i></p>
+
+									<ul>
+										<li>After <a href="https://github.com/akhil-reddy/beads/tree/main/beads/core/cmu/sequencing/receive">receive</a> - For a still image, photoisomerizations are stable for rods and cones; the fovea has higher color opponency while the outer edges are being integrated over time </li>
+										<li>After <a href="https://github.com/akhil-reddy/beads/tree/main/beads/core/cmu/sequencing/combine">combine</a> - Contrasting elements like the sunset facade of the building or bright cars & trees stand out, slowly enhancing the stimulus</li>
+									</ul>
+
+									<p><span class="image main" style="width:50%"><img src="images/Offline Stored Stimulus Snapshot Frame 68.jpg" alt="" /></span></p>
+
+									<p><i>Frame 68</i></p>
+
+									<ul>
+										<li>After <a href="https://github.com/akhil-reddy/beads/tree/main/beads/core/cmu/sequencing/transforms">transform</a> - The visual CMU will notice the red car on the left corner from changing contrast and the starburst amacrine cells, to immediately enhance spike frequency. In subsequent frames, as the car moves on the paved road, spike frequency is increased throughout that strip in the field of vision</li>
+										<li>After <a href="https://github.com/akhil-reddy/beads/tree/main/beads/core/cmu/transportation">transport</a> - Ganglion cells package spike trains and transport them through the optic nerve</li>
+										<li>After the <a href="https://github.com/akhil-reddy/beads/tree/main/beads/core/eru/hub">cortex</a> - Using population coding, the cortex constructs shapes and objects from stimulus. While it may not understand the significance of any of those objects initially, the spike train signature /  “memory" is stored for future association and creativity by the inner brain. This is equivalent to teaching someone the labels for objects they’ve seen earlier on</li>
+									</ul>
 
 									<hr class="major" />
 
 									<h2>Algorithms / Development</h2>
 									<h3>CMU Development</h3>
 
-									<p><i>Minor tweaks across the visual CMU, retina and cortex, to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
+									<p><i>Minor tweaks across the CMU and cortex, to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
 
 									<p>
 										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
@@ -61,7 +102,7 @@
 									<h3>Deployment</h3>
 
 									<ol>
-										<li>Overlaying video frames onto the retina, including code optimization for channel processing</li>
+										<li>Code optimization for channel processing</li>
 										<li>Post processing in the visual cortex</li>
 										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
 										<li>Post processing in the auditory cortex</li>
@@ -102,7 +143,7 @@
 										<li>
 											<span class="opener">Blog</span>
 											<ul>
-                        <li><a href="251031.html">Oct 31 2025 Update</a></li>
+                        						<li><a href="251031.html">Oct 31 2025 Update</a></li>
 												<li><a href="251012.html">Oct 12 2025 Update</a></li>
                         						<li><a href="250930.html">Sep 30 2025 Update</a></li>
                         						<li><a href="250915.html">Sep 15 2025 Update</a></li>
