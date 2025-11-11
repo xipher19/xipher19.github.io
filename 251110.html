@@ -1,1 +1,210 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Priors / Finetuning</h1>
+									</header>
+
+									<p>In the past two weeks, I’ve been focused on producing biologically grounded priors for Beads. These priors include constants (such as voltage thresholds, inductance, etc) and unitary measurements (no. of cells, vesicles, etc). I’ve also continued to fix bugs and bridge components in the audio and visual pipelines.</p>
+
+									<hr class="major" />
+									<h2>Priors / Finetuning</h2>
+
+									<p>These priors come from a variety of sources - past neuroscience research, computational ease and physical constraints. I’ve put in my best effort to keep them biologically grounded along with a provision for improvement in future phases of Beads.</p>
+
+									<h3>Photoreceptors</h3>
+
+									<ul>
+										<li>We model the circular <a href="https://en.wikipedia.org/wiki/Photoreceptor_cell">photoreceptors</a> as hexagonal lattice sites. Each lattice site inside the central <a href="https://en.wikipedia.org/wiki/Fovea_centralis">fovea</a> is further broken down into six cone subunits; on the other hand, sites outside the fovea have an increased (stochastic) density of rods that peaks at intermediate eccentricity. This preserves mosaic irregularity in the retina</li>
+										<li>The short / medium / long (wavelength) cycle of cone clusters produces short-range color sampling and gives every local patch access to all three cone types (at the hex scale). This design ensures that local color opponency is always possible</li>
+										<li>Spectral sensitivity is represented by shifted <a href="http://psychtoolbox.org/docs/GovardovskiiNomogram">Govardoskii nomograms</a> (with wavelength peaking at 445 nm for short, 535 nm for medium, 565 nm for long; rods peak at 498 nm). RGB values from streams are converted into estimated luminance and finally into photoisomerizations per sec for spectral processing</li>
+										<li>An estimated 9.9 million photoreceptors across a 1.248 mm radius patch are generated: approx. 6.39 M cones and approx. 3.52 M rods; the total area is approx. 4.893 mm² </li>
+									</ul>
+
+									<h3>Inner Retina / Plexiform Layers</h3>
+
+									<ul>
+										<li>A <a href="https://en.wikipedia.org/wiki/Retina_horizontal_cell">horizontal cell</a> is tied to each photoreceptor cell and has a radium of 10 microns, implying its inhibition neighbors are in the order of 100</li>
+										<li><a href="https://en.wikipedia.org/wiki/Retina_bipolar_cell">Bipolar cell</a> time constants of 0.07 to 0.1 s correspond to low-pass corner frequencies around 1.6 to 2.3 Hz. This ensures that noise and jitter is filtered out. Additionally, bipolar cells have leaky integrators to help clear input drive over time</li>
+										<li><a href="https://en.wikipedia.org/wiki/AII_amacrine_cells">AII amacrine cells</a> specialize in scotopic routing (i.e., dim light vision) and apply piecewise functions to couple rod bipolar input with cone bipolar ON / OFF pathways</li>
+										<li>1000s of ON cone bipolar cells are clustered (with a radius of 50 microns) for direction selectivity by <a href="https://en.wikipedia.org/wiki/Starburst_amacrine_cell">starburst amacrine cells</a> </li>
+										<li><a href="https://pubmed.ncbi.nlm.nih.gov/37880369/">Direction selective ganglion cells</a> (DSGC) further cluster starburst amacrine cells to form the direction component of the optical spike trains. A tunable binary threshold regulates spikes in DSGC</li>
+										<li><a href="https://en.wikipedia.org/wiki/Retinal_ganglion_cell">Midget, parasol and small-bistratified cells</a> are instantiated by clustering cone bipolar clusters (greedy proximity clustering with group sizes 6 to 8) and computing an radially exponential weighted sum of bipolar outputs (radius is 30 microns for midget, 80 microns for parasol and 60 microns for bistratified)</li>
+									</ul>
+
+									<h3>Visual Cortex</h3>
+
+									<ul>
+										<li>A multi-spectral <a href="https://en.wikipedia.org/wiki/Gabor_filter">gabor</a> / bank is constructed which stores 8 orientations and 2 temporal affinities. <b>Studies (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3158037/">here</a> and <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2556291/">here</a>) have shown that primary sensory areas have linear dynamics that can be explained by STRFs and gabors</b></li>
+										<li>In the primary <a href="https://en.wikipedia.org/wiki/Visual_cortex">visual cortex</a>’s L4 units, multicompartment <a href="https://en.wikipedia.org/wiki/Interneuron">interneuron</a> spikes are detected when somatic voltage crosses -30 mV</li>
+										<li>The higher cortices contain esoteric constants that I’ve avoided here</li>
+									</ul>
+
+									<h3>Outer Ear</h3>
+
+									<ul>
+										<li><a href="https://en.wikipedia.org/wiki/Auricle_(anatomy)">Pinna</a> notches are created at 6 kHz / 8 kHz, and peaks at 4 kHz / 12 kHz</li>
+										<li>The <a href="https://en.wikipedia.org/wiki/Ear_canal">ear canal</a> length is 25 mm which gives a decibel boost of approx. 12 dB. The fundamental base frequency of the ear canal is approx. 3430 Hz</li>
+									</ul>
+
+									<h3>Cochlea</h3>
+
+									<ul>
+										<li>200 log-spaced <a href="https://en.wikipedia.org/wiki/Basilar_membrane">basilar membrane</a> segments are created with center frequencies between 20 Hz and 20000 Hz. The duct depth (for segments to vibrate) is 0.5 mm</li>
+										<li><a href="https://en.wikipedia.org/wiki/Hair_cell">Outer hair cells</a> are attached 1:1 to the above segments and produce a maximum length change of 10 nm on the basilar segments</li>
+										<li><a href="https://www.viewpoint.fr/news/the-mechano-electrical-transduction-complex">MET</a> has a maximum current of 200 pico amps</li>
+										<li>The refractory time constant of the membrane (i.e., how fast it can recoil to a useful state) is 0.8 ms and the maximum vesicle release rate is 5000 per sec</li>
+										<li>Further esoteric constants have been avoided here</li>
+									</ul>
+
+									<h3>Auditory Cortex</h3>
+
+									<ul>
+										<li><a href="https://en.wikipedia.org/wiki/Cochlear_nerve">Auditory nerve</a> fibers are simulated using a leaky integrate-and-fire model with threshold voltage as -50mV and resting voltage as -65 mV. The refractory period is 0.8 ms, capacitance time constant (time it takes to charge the membrane) and the electrical charge per vesicle is about 10^-13 coulombs</li>
+										<li>Most auditory cortex <a href="https://pubmed.ncbi.nlm.nih.gov/16622699/#:~:text=The%20integrate%2Dand%2Dfire%20neuron%20model%20is%20one%20of%20the,injected%20current%20that%20it%20receives.">integrate-and-fire</a> models are approximated as C dV / dt = - (V - V_rest)/R + I_synaptic</li>
+										<li>Binaural processing uses a discrete-delay coincidence detector for <a href="https://en.wikipedia.org/wiki/Interaural_time_difference">ITD</a> (MSO) i.e., left and right ear spike trains are shifted across a bank of delays (−0.5 ms to +0.5 ms with 9 delays) and contributions are summed into time bins. If any time bins exceed a coincidence threshold, MSO events (for locating sounds) are produced</li>
+										<li>An LSO comparator computes per bin excitatory minus inhibitory counts and thresholds the difference to produce <a href="https://pressbooks.umn.edu/sensationandperception/chapter/interaural-level-difference-draft/#:~:text=High%20frequency%20sounds%20have%20short,OpenStax%2C%20Psychology%20Chapter%205.4%20Hearing">ILD</a> / LSO events</li>
+										<li>Feedback loops from this component are fed into OHCs for <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3343276/">efferent gain</a> </li>
+										<li>Similar to the visual cortex, a spectrotemporal receptive field helps match incoming spike trains to multicompartment interneurons. <b>Studies (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3158037/">here</a> and <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2556291/">here</a>) have shown that primary sensory areas have linear dynamics that can be explained by STRFs and gabors</b></li>
+									</ul>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>CMU Development</h3>
+
+									<p><i>Minor tweaks across the CMU and cortex, to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Code optimization for channel processing</li>
+										<li>Post processing in the visual cortex</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Post processing in the auditory cortex</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
+										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Nov 10, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="251110.html">Nov 10 2025 Update</a></li>
+                        						<li><a href="251031.html">Oct 31 2025 Update</a></li>
+												<li><a href="251012.html">Oct 12 2025 Update</a></li>
+                        						<li><a href="250930.html">Sep 30 2025 Update</a></li>
+                        						<li><a href="250915.html">Sep 15 2025 Update</a></li>
+						            			<li><a href="250903.html">Sep 03 2025 Update</a></li>
+						            			<li><a href="250815.html">Aug 15 2025 Update</a></li>
+												<li><a href="250802.html">Aug 02 2025 Update</a></li>
+												<li><a href="250720.html">Jul 20 2025 Update</a></li>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
