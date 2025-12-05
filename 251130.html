@@ -1,1 +1,222 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Fractals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
 
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong>Beads</strong> by Akhil K.</a>
+									<ul class="icons">
+										<li><a href="https://github.com/akhil-reddy/beads" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+										<li><a href="https://www.linkedin.com/in/akhil-k" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Content -->
+								<section>
+									<header class="main">
+										<h1>Visual Pipeline Demonstration</h1>
+									</header>
+
+									<p>In the past three weeks, I’ve focused on a static demo (fragmented cells, file-based, offline image / video) of all components of Beads that are implemented in the visual pipeline. I’ve also been focusing on reducing the time complexity of some operations (where N is of the order 10^7) for efficient processing. </p>
+
+									<hr class="major" />
+									<h2>Static Demo</h2>
+
+									<h3>Evening (cone dominant) conditions</h3>
+
+									<p><span class="image main" style="width:50%"><img src="images/Demo Evening Frame.jpg" alt="" /></span></p>
+
+									<p align="center"><i>Photo taken at ~6 PM</i></p>
+
+									<p><span class="image main" style="width:50%"><img src="images/Demo Evening Frame With Overlay.jpg" alt="" /></span></p>
+
+									<p align="center"><i>Image with an overlay of the field of vision. Orange dots are rods and blue ones are cones</i></p>
+
+									<p><i>Intermediate output files can be found <a href="https://drive.google.com/drive/folders/1lG7UxnTV-MFcXyncMsWnyWNLFYWGAXtX?usp=sharing">here</a>.</i></p>
+
+									<p>
+										idx,x_micron,y_micron,pixel_x,pixel_y,cell_type,subtype,response <br><br>
+										0,-47.198384506251905,-1246.25,923,0,<b>rod,,0.014759397941521164</b> <br>
+										1,-48.06440991003634,-1246.25,923,0,rod,,0.014759397941521164 <br>
+										2,-47.63139720814412,-1247.0,923,0,rod,,0.014759397941521164 <br>
+										3,-43.73428289111415,-1246.25,926,0,rod,,0.014759397941521164 <br>
+										4,-44.60030829489858,-1246.25,925,0,rod,,0.014759397941521164 <br>
+										5,-44.167295593006365,-1247.0,926,0,rod,,0.014759397941521164 <br>
+										2450592,-519.3265671360683,-122.5,560,486,<b>cone,S,10.952780764900806</b> <br>
+										2450593,-519.9039174052581,-122.5,560,486,<b>cone,M,27.333880265596587</b> <br>
+										2450594,-520.1925925398529,-123.0,559,486,<b>cone,L,24.607356198177524</b> <br>
+										2450595,-519.9039174052581,-123.5,560,486,cone,S,10.952780764900806 <br>
+										2450596,-519.3265671360683,-123.5,560,486,cone,M,27.333880265596587 <br>
+										2450597,-519.0378920014736,-123.0,560,486,cone,L,35.590038225972556 <br>
+										2450598,-517.5945163284995,-122.5,561,486,cone,S,7.10038202175422 <br>
+									</p>
+
+									<p>A sample of the photoreceptor output file is shown above. The response column shows <b>high</b> stimulus activity for those photoreceptors.</p>
+
+									<h3>Nighttime (rod dominant) conditions</h3>
+
+									<p><span class="image main" style="width:50%"><img src="images/Demo Night Frame.jpg" alt="" /></span></p>
+
+									<p align="center"><i>Photo taken at ~11 PM</i></p>
+
+									<p><span class="image main" style="width:50%"><img src="images/Demo Night Frame With Overlay.jpg" alt="" /></span></p>
+
+									<p align="center"><i>Image with an overlay of the field of vision. Orange dots are rods and blue ones are cones</i></p>
+
+									<p><i>Output files can be found <a href="https://drive.google.com/drive/folders/1l-g5hPFhyCpwa7sxUIh0Y73FtXHNuYMQ?usp=share_link">here</a>.</i></p>
+
+									<p>
+										idx,x_micron,y_micron,pixel_x,pixel_y,cell_type,subtype,response <br><br>
+										0,-48.93043531382078,-1246.25,2744,3,<b>rod,,0.0</b> <br>
+										1,-49.796460717605214,-1246.25,2742,3,rod,,0.0 <br>
+										2,-49.363448015713,-1247.0,2743,1,rod,,0.0 <br>
+										3,-40.2701812759764,-1246.25,2763,3,rod,,0.0 <br>
+										4,-41.13620667976083,-1246.25,2761,3,rod,,0.0 <br>
+										5,-40.703193977868615,-1247.0,2762,1,rod,,0.0 <br>
+										2912055,186.48413694824913,-4.0,3282,2135,<b>cone,S,0.2260931779494748</b> <br>
+										2912056,185.90678667905948,-4.0,3281,2135,<b>cone,M,0.7150012489333931</b> <br>
+										2912057,185.61811154446468,-4.5,3280,2134,<b>cone,L,0.938112123998069</b> <br>
+										2912058,185.90678667905948,-5.0,3281,2133,cone,S,0.15678359931852023 <br>
+										2912059,186.48413694824913,-5.0,3282,2133,cone,M,0.34928243593530567 <br>
+										2912060,186.77281208284396,-4.5,3283,2134,cone,L,0.5999677118408309 <br>
+										2912061,188.21618775581797,-4.0,3286,2135,cone,S,0.13636902852408356 <br>
+										2912062,187.63883748662838,-4.0,3285,2135,cone,M,0.40157034245504236 <br>
+										2912063,187.35016235203355,-4.5,3284,2134,cone,L,0.5268774109934812 <br>
+									</p>
+
+									<p>A sample of the photoreceptor output file is shown above. The response column shows <b>low</b> stimulus activity for those photoreceptors.</p>
+
+									<h3>How does this implementation help?</h3>
+
+									<p>This implementation provides a biologically grounded framework to validate neuromorphic hardware, spiking algorithms; and acts as the essential bridge between sensory and higher cortex functions in cognitive computing. However, the primary goal of these components is to supplement the rest of the Beads architecture, by providing high fidelity stimulus for nuanced thought processing and cognitive functions like creativity, language and reasoning. </p>
+
+									<hr class="major" />
+
+									<h2>Algorithms / Development</h2>
+									<h3>CMU Development</h3>
+
+									<p><i>Minor tweaks across the CMU and cortex, to streamline cell methods into distinct cell creation, organization and functioning. Please find the changes in the commits (linked below for reference).</i></p>
+
+									<p>
+										Development Activity - <a href="https://github.com/akhil-reddy/beads/graphs/commit-activity">https://github.com/akhil-reddy/beads/graphs/commit-activity</a> <br>
+									</p>
+
+									<p><i>Please note that some code (class templates, function comments, etc) is AI generated, so that I spend more of my productive time thinking and designing. However, I cross-verify each block of generated code with its corresponding design choice before moving ahead. </i></p>
+
+									<hr class="major" />
+									<h2>Next Steps</h2>
+
+									<h3>Deployment</h3>
+
+									<ol>
+										<li>Code optimization for channel processing</li>
+										<li>Post processing in the visual cortex</li>
+										<li>Overlaying audio clips onto the cochlea, including optimization for wave segment processing</li>
+										<li>Post processing in the auditory cortex</li>
+										<li>Parallelization / streaming of cellular events via Flink or equivalent</li>
+									</ol>
+
+									<h3>Building the Environmental Response System (ERS)</h3>
+
+									<ol>
+										<li>Building the ERUs</li>
+										<li>Neurotransmitters - Fed by vision’s bipolar and amacrine cells, for example, to act on contrasting and/or temporal stimulus</li>
+										<li>Focus - Building focus and its supporting mechanisms (of which acetylcholine is one)</li>
+									</ol>
+
+								</section>
+
+								<hr class="major" />
+								<footer>
+									<span class="date">Created Nov 30, 2025</span>
+								</footer>
+								<br>
+
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+										<li><a href="index.html">Introduction</a></li>
+										<li>
+											<span class="opener">Blog</span>
+											<ul>
+												<li><a href="251130.html">Nov 30 2025 Update</a></li>
+												<li><a href="251110.html">Nov 10 2025 Update</a></li>
+                        						<li><a href="251031.html">Oct 31 2025 Update</a></li>
+												<li><a href="251012.html">Oct 12 2025 Update</a></li>
+                        						<li><a href="250930.html">Sep 30 2025 Update</a></li>
+                        						<li><a href="250915.html">Sep 15 2025 Update</a></li>
+						            			<li><a href="250903.html">Sep 03 2025 Update</a></li>
+						            			<li><a href="250815.html">Aug 15 2025 Update</a></li>
+												<li><a href="250802.html">Aug 02 2025 Update</a></li>
+												<li><a href="250720.html">Jul 20 2025 Update</a></li>
+												<li><a href="250706.html">Jul 06 2025 Update</a></li>
+												<li><a href="250622.html">Jun 22 2025 Update</a></li>
+												<li><a href="250609.html">Jun 09 2025 Update</a></li>
+												<li><a href="250524.html">May 24 2025 Update</a></li>
+												<li><a href="250510.html">May 10 2025 Update</a></li>
+												<li><a href="250427.html">Apr 27 2025 Update</a></li>
+												<li><a href="250413.html">Apr 13 2025 Update</a></li>
+												<li><a href="250330.html">Mar 30 2025 Update</a></li>
+												<li><a href="250316.html">Mar 16 2025 Update</a></li>
+												<li><a href="250301.html">Mar 01 2025 Update</a></li>
+												<li><a href="250216.html">Feb 16 2025 Update</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<div id="copyright">
+										&copy; This is a personal blog. All opinions are my own and not associated with any institution(s). The information provided on this website does not, and is not intended to, constitute professional and/or legal advice.
+										I make no representation and warranty whatsoever and disclaim all liability for the completeness, accuracy or reliability of the information contained herein, and shall not constitute a solicitation under any jurisdiction or to any person, if such solicitation under such jurisdiction or to such person would be unlawful.
+										
+										<br>
+										<br>
+										Design is templated from <a href="https://html5up.net">HTML5 UP</a>
+									</div>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
